@@ -59,5 +59,7 @@ function handleForm(formId, msgId, endpoint, successText) {
   });
 }
 
-handleForm("waitlistForm", "waitlistMsg", "/api/waitlist", "✅ You’re on the waitlist! Check your email for confirmation.");
-handleForm("courierForm", "courierMsg", "/api/courier", "✅ Application received! Check your email for next steps.");
+const API_BASE = "https://zigaswift-backend.onrender.com";
+
+handleForm("waitlistForm", "waitlistMsg", `${API_BASE}/api/waitlist`, "✅ You're on the waitlist! Check your email for confirmation.");
+handleForm("courierForm", "courierMsg", `${API_BASE}/api/courier`, "✅ Application received! Check your email for next steps.");
