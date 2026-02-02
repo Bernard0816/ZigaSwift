@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZigaSwift - New Shipment</title>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+--bg: #0b1220;
+--card: #121a2c;
+--text: #e7eefc;
+--muted: #9ab0d6;
+--line: #22304f;
+--btn: #2b76ff;
+--success: #3ddc97;
+--danger: #ff6b6b;
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+font-family: system-ui, sans-serif;
+background: var(--bg);
+color: var(--text);
+min-height: 100vh;
+padding: 20px;
+}
+.container {
+max-width: 600px;
+margin: 0 auto;
+}
+h1 {
+font-size: 1.8rem;
+margin-bottom: 24px;
+text-align: center;
+}
+.card {
+background: var(--card);
+border: 1px solid var(--line);
+border-radius: 12px;
+padding: 24px;
+margin-bottom: 24px;
+}
+label {
+display: block;
+margin-bottom: 8px;
+font-weight: 500;
+color: var(--muted);
+}
+input, select {
+width: 100%;
+padding: 12px;
+margin-bottom: 16px;
+background: #0e1628;
+border: 1px solid var(--line);
+border-radius: 8px;
+color: var(--text);
+font-size: 1rem;
+}
+input:focus, select:focus {
+outline: none;
+border-color: var(--btn);
+}
+button {
+width: 100%;
+padding: 14px;
+background: var(--btn);
+color: white;
+border: none;
+border-radius: 8px;
+font-size: 1.1rem;
+font-weight: 600;
+cursor: pointer;
+transition: background 0.2s;
+}
+button:hover { background: #1f5ed8; }
+button:disabled {
+background: #1a2742;
+cursor: not-allowed;
+}
+.message {
+margin-top: 16px;
+padding: 12px;
+border-radius: 8px;
+text-align: center;
+}
+.success { background: rgba(61,220,151,0.15); color: var(--success); }
+.error { background: rgba(255,107,107,0.15); color: var(--danger); }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>New Shipment - ZigaSwift</h1>
+
+<div class="card">
+<form id="shipmentForm">
+<label for="pickup">Pickup City / Address</label>
+<input type="text" id="pickup" placeholder="e.g. Houston, TX" required />
+
+<label for="dropoff">Dropoff City / Address</label>
+<input type="text" id="dropoff" placeholder="e.g. Austin, TX" required />
+
+<label for="weight">Weight (kg)</label>
+<input type="number" id="weight" step="0.1" min="0.1" placeholder="e.g. 10" required />
+
+<label for="priority">Priority Level</label>
+<select id="priority" required>
+<option value="standard">Standard (cheapest, normal speed)</option>
+<option value="express">Express (faster)</option>
+<option value="rush">Rush (fastest, higher fee)</option>
+</select>
+
+<label for="email">Your Email (for receipt)</label>
+<input type="email" id="email" placeholder="your@email.com" required />
+
+<button type="submit" id="payBtn">Calculate & Pay</button>
+</form>
+
+<div id="message" class="message" style="display:none;"></div>
+</div>
+</div>
+
+<script>
+const stripe = Stripe('pk_test_51SwGnwRwoV3fFFKtraHJBRW6WHMH3voeAgqJ85iYkkBKI985UqttgtL7yzwSKeNIOn2cUSJdaDRhiC0M6CTJwZR100hK6H4ler'); // ← REPLACE WITH YOUR REAL PK_TEST_ KEY
+
+const form = document.getElementById('shipmentForm');
+const payBtn = document.getElementById('payBtn');
+const messageDiv = document.getElementById('message');
+
+form.addEventListener('submit', async (e) => {
+e.preventDefault();
+
+payBtn.disabled = true;
+payBtn.textContent = 'Processing...';
+messageDiv.style.display = 'none';
+
+try {
+const payload = {
+pickup: document.getElementById('pickup').value.trim(),
+dropoff: document.getElementById('dropoff').value.trim(),
+weightKg: parseFloat(document.getElementById('weight').value),
+priority: document.getElementById('priority').value,
+senderEmail: document.getElementById('email').value.trim(),
+};
+
+if (isNaN(payload.weightKg) || payload.weightKg <= 0) {
+throw new Error('Please enter a valid weight (kg)');
+}
+
+const res = await fetch('https://zigaswift-backend-1.onrender.com/api/create-shipment-payment', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(payload),
+});
+
+if (!res.ok) {
+const errData = await res.json();
+throw new Error(errData.error || `Server error (${res.status})`);
+}
+
+const { url } = await res.json();
+
+if (!url) throw new Error('No checkout URL received');
+
+// Redirect to Stripe Checkout
+window.location.href = url;
+} catch (err) {
+messageDiv.textContent = err.message || 'Something went wrong. Please try again.';
+messageDiv.className = 'message error';
+messageDiv.style.display = 'block';
+
+payBtn.disabled = false;
+payBtn.textContent = 'Calculate & Pay';
+}
+});
+</script>
+</body>
+</html>
