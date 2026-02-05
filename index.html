@@ -1,472 +1,257 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ZigaSwift — Verified. Secure. On the Move.</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ZigaSwift — Verified. Secure. On the Move.</title>
 
-  <!-- Primary SEO -->
-  <meta name="description" content="ZigaSwift connects verified travelers with people who need fast, secure package delivery for small, legal items. Built-in accountability: declarations, photos, signatures, and escrow-style payouts." />
-  <meta name="robots" content="index,follow" />
-  <link rel="canonical" href="https://ZigaSwift.example/" />
+<!-- Primary SEO -->
+<meta name="description" content="ZigaSwift connects verified travelers with people who need quick, affordable delivery for small, legal items. Built-in accountability: declarations, photos, signatures, and escrow-style payouts." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://ZigaSwift.example/" />
 
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="ZigaSwift — Verified. Secure. On the Move." />
-  <meta property="og:description" content="Fast, secure package delivery powered by verified travelers - ZigaSwift. Declare, photograph, verify, deliver — then get paid." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ZigaSwift.example/" />
-  <meta property="og:image" content="https://ZigaSwift.example/og-image.png" />
+<!-- Open Graph / Social -->
+<meta property="og:title" content="ZigaSwift — Verified. Secure. On the Move." />
+<meta property="og:description" content="Fast, secure package delivery powered by verified travelers - ZigaSwift. Declare, photograph, verify, deliver — then get paid." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ZigaSwift.example/" />
+<meta property="og:image" content="https://ZigaSwift.example/og-image.png" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ZigaSwift — Verified. Secure. On the Move." />
-  <meta name="twitter:description" content="Fast, secure package delivery powered by verified travelers - ZigaSwift." />
-  <meta name="twitter:image" content="https://ZigaSwift.example/og-image.png" />
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ZigaSwift — Verified. Secure. On the Move." />
+<meta name="twitter:description" content="Fast, secure package delivery powered by verified travelers - ZigaSwift." />
+<meta name="twitter:image" content="https://ZigaSwift.example/og-image.png" />
 
-  <!-- App / Theme -->
-  <meta name="theme-color" content="#0b1220" />
+<!-- App / Theme -->
+<meta name="theme-color" content="#0b1220" />
 
-  <!-- JSON-LD (Organization) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"ZigaSwift",
-    "url":"https://ZigaSwift.example/",
-    "logo":"https://ZigaSwift.example/logo.png",
-    "sameAs":[]
-  }
-  </script>
+<!-- JSON-LD (Organization) -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"Organization",
+"name":"ZigaSwift",
+"url":"https://ZigaSwift.example/",
+"logo":"https://ZigaSwift.example/logo.png",
+"sameAs":[]
+}
+</script>
 
-  <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css" />
 
-  <!-- Analytics (choose ONE and set IDs)
-       1) Plausible: uncomment and replace domain
-       <script defer data-domain="ZigaSwift.com" src="https://plausible.io/js/script.js"></script>
+<!-- Analytics (choose ONE and set IDs)
+1) Plausible: uncomment and replace domain
+<script defer data-domain="ZigaSwift.com" src="https://plausible.io/js/script.js"></script>
 
-       2) Google Analytics 4 (GA4): uncomment and replace G-XXXXXXXXXX
-       <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-       <script>
-         window.dataLayer = window.dataLayer || [];
-         function gtag(){dataLayer.push(arguments);}
-         gtag('js', new Date());
-         gtag('config', 'G-XXXXXXXXXX');
-       </script>
-  -->
+2) Google Analytics 4 (GA4): uncomment and replace G-XXXXXXXXXX
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+<!-- NEW: Auth styles -->
+<style>
+.modal {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.8);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 1000;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.3s;
+}
+.modal.open { opacity: 1; pointer-events: auto; }
+.modal-content {
+background: var(--card);
+padding: 24px;
+border-radius: 12px;
+max-width: 400px;
+width: 90%;
+position: relative;
+}
+.close-modal {
+position: absolute;
+top: 12px;
+right: 12px;
+background: none;
+border: none;
+color: var(--muted);
+font-size: 1.5rem;
+cursor: pointer;
+}
+.toggle-form { text-align: center; margin-top: 16px; color: var(--muted); }
+.toggle-form a { color: var(--btn); cursor: pointer; }
+.logged-in { display: flex; align-items: center; gap: 12px; }
+.logout { background: none; border: none; color: var(--muted); cursor: pointer; }
+</style>
 </head>
 <body>
-  <header class="topbar" id="top">
-    <nav class="nav">
-      <a class="brand" href="#top" aria-label="ZigaSwift Home">
-        <span class="brand-mark" aria-hidden="true">✓</span>
-        <span class="brand-name">ZigaSwift</span>
-      </a>
+<header class="topbar" id="top">
+<nav class="nav">
+<a class="brand" href="#top" aria-label="ZigaSwift Home">
+<span class="brand-mark" aria-hidden="true">✓</span>
+<span class="brand-name">ZigaSwift</span>
+</a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+<button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+<span></span><span></span><span></span>
+</button>
 
-      <div class="nav-links" id="navLinks">
-        <a href="#how">How it works</a>
-        <a href="#safety">Safety</a>
-        <a href="#earn">Earn</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-        <a class="btn btn-sm btn-ghost" href="#waitlist">Join waitlist</a>
-      </div>
-    </nav>
-  </header>
+<div class="nav-links" id="navLinks">
+<a href="#how">How it works</a>
+<a href="#safety">Safety</a>
+<a href="#earn">Earn</a>
+<a href="#pricing">Pricing</a>
+<a href="#faq">FAQ</a>
+<a class="btn btn-sm btn-ghost" href="#waitlist">Join waitlist</a>
+<!-- NEW: Sign In/Dashboard -->
+<div id="authSection">
+<button class="btn btn-sm btn-ghost" id="signInBtn">Sign In</button>
+</div>
+</div>
+</nav>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero-grid">
-        <div>
-          <div class="pill">
-            <span class="dot" aria-hidden="true"></span>
-            Verified couriers • Photo proof • Digital signatures
-          </div>
+<!-- NEW: Sign In/Register Modal -->
+<div id="authModal" class="modal">
+<div class="modal-content">
+<button class="close-modal" id="closeModal">&times;</button>
+<h2 id="modalTitle">Sign In</h2>
+<form id="authForm">
+<label for="name">Full Name (for register)</label>
+<input type="text" id="name" placeholder="Jane Doe" style="display:none;" />
 
-          <h1>
-            Fast, secure package delivery powered by
-            <span class="accent">verified travelers</span>.
-          </h1>
+<label for="email">Email</label>
+<input type="email" id="email" placeholder="jane@email.com" required />
 
-          <p class="lead">
-            ZigaSwift connects verified travelers with people who need quick, affordable delivery for small, legal packages.
-            Built-in accountability: declarations, photos, signatures, and escrow-style payouts.
-          </p>
+<label for="password">Password</label>
+<input type="password" id="password" placeholder="At least 6 characters" required />
 
-          <div class="cta">
-            <a class="btn" href="#waitlist">Get Early Access</a>
-            <a class="btn btn-ghost" href="#courier">Become a Courier</a>
-          </div>
+<label for="role" style="display:none;">Role</label>
+<select id="role" style="display:none;">
+<option value="sender">Sender</option>
+<option value="courier">Courier</option>
+</select>
 
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-num">24/7</div>
-              <div class="stat-label">Always-on travel routes</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">4–6</div>
-              <div class="stat-label">Photos per package</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">10–20%</div>
-              <div class="stat-label">Platform fee model</div>
-            </div>
-          </div>
-        </div>
+<button type="submit" id="authSubmit">Sign In</button>
+</form>
+<p class="toggle-form">Don't have an account? <a id="toggleRegister">Register</a></p>
+<p id="authMessage" class="form-msg"></p>
+</div>
+</div>
 
-        <div class="hero-card" role="img" aria-label="ZigaSwift app preview card">
-          <div class="card">
-            <div class="card-top">
-              <div class="chip">Sender</div>
-              <div class="chip chip-secondary">Courier</div>
-              <div class="chip chip-tertiary">Recipient</div>
-            </div>
+<main>
+<!-- Your existing main content here (hero, sections, etc.) -->
+</main>
 
-            <div class="card-title">Delivery flow</div>
-            <ol class="flow">
-              <li><span class="step">1</span> Declare contents + value</li>
-              <li><span class="step">2</span> Upload photos (4–6)</li>
-              <li><span class="step">3</span> Courier verifies & signs</li>
-              <li><span class="step">4</span> Recipient confirms delivery</li>
-              <li><span class="step">5</span> Payment released</li>
-            </ol>
+<footer class="footer">
+<!-- Your existing footer -->
+</footer>
 
-            <div class="mini">
-              <div>
-                <div class="mini-label">Courier reward</div>
-                <div class="mini-value">$40–$60+</div>
-              </div>
-              <div>
-                <div class="mini-label">Trust tier</div>
-                <div class="mini-value">Gold ✓</div>
-              </div>
-            </div>
+<script src="script.js"></script>
+<!-- NEW: Auth JS -->
+<script>
+const backendUrl = 'https://zigaswift-backend-1.onrender.com'; // Change to your main backend
 
-            <div class="card-foot">
-              <span class="badge">Escrow payments</span>
-              <span class="badge">Identity verification</span>
-              <span class="badge">Audit trail</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+const authModal = document.getElementById('authModal');
+const closeModal = document.getElementById('closeModal');
+const signInBtn = document.getElementById('signInBtn');
+const authForm = document.getElementById('authForm');
+const modalTitle = document.getElementById('modalTitle');
+const authSubmit = document.getElementById('authSubmit');
+const toggleRegister = document.getElementById('toggleRegister');
+const nameInput = document.getElementById('name');
+const roleSelect = document.getElementById('role');
+const authMessage = document.getElementById('authMessage');
+const authSection = document.getElementById('authSection');
 
-    <section class="strip">
-      <div class="container strip-inner">
-        <div class="strip-item">Built for: travelers • small businesses • urgent delivery</div>
-        <div class="strip-item">Domestic first → regional → global rollout</div>
-        <div class="strip-item">Rewarding top couriers with multi-delivery capacity</div>
-      </div>
-    </section>
+let isRegister = false;
 
-    <section class="section" id="problem">
-      <div class="container two-col">
-        <div>
-          <h2>The problem</h2>
-          <p>
-            Traditional shipping can be expensive, slow, and complicated—especially for small, time-sensitive items.
-            Delays, rigid processes, and unpredictability frustrate both individuals and small businesses.
-          </p>
-          <ul class="checklist">
-            <li>High fees for urgent delivery</li>
-            <li>Limited flexibility for small packages</li>
-            <li>Slow handoffs and unclear timelines</li>
-          </ul>
-        </div>
-        <div>
-          <h2>The solution</h2>
-          <p>
-            ZigaSwift uses existing travel routes. Verified travelers opt in to carry small, legal packages heading to the same
-            destination—creating faster deliveries and new earning opportunities.
-          </p>
-          <ul class="checklist">
-            <li>Verified identities + trust scoring</li>
-            <li>Photo proof + digital signatures</li>
-            <li>Escrow payments released on delivery</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+function openModal(register = false) {
+isRegister = register;
+modalTitle.textContent = register ? 'Register' : 'Sign In';
+authSubmit.textContent = register ? 'Register' : 'Sign In';
+toggleRegister.textContent = register ? 'Sign In' : 'Register';
+nameInput.style.display = register ? 'block' : 'none';
+roleSelect.style.display = register ? 'block' : 'none';
+authModal.classList.add('open');
+}
 
-    <section class="section alt" id="how">
-      <div class="container">
-        <div class="section-head">
-          <h2>How ZigaSwift works</h2>
-          <p>Simple flows for senders and couriers—built around accountability.</p>
-        </div>
+function closeAuthModal() {
+authModal.classList.remove('open');
+authMessage.textContent = '';
+}
 
-        <div class="grid-3">
-          <div class="tile">
-            <div class="tile-icon" aria-hidden="true">📦</div>
-            <h3>Sender posts</h3>
-            <p>Declare contents + value, upload 4–6 photos, sign a legal declaration, and request delivery.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-icon" aria-hidden="true">✈️</div>
-            <h3>Courier matches</h3>
-            <p>Verified travelers accept deliveries heading to the same destination and verify the package on pickup.</p>
-          </div>
-          <div class="tile">
-            <div class="tile-icon" aria-hidden="true">✅</div>
-            <h3>Confirm & pay</h3>
-            <p>Recipient confirms delivery in-app. Funds release to courier. ZigaSwift earns a service fee.</p>
-          </div>
-        </div>
+signInBtn.addEventListener('click', () => openModal(false));
 
-        <div class="callout">
-          <div>
-            <h3>Performance tiers (multi-delivery)</h3>
-            <p>
-              Couriers with high ratings and strong reviews can unlock up to <b>3 deliveries per trip</b>.
-              This increases capacity, boosts earnings, and strengthens customer trust.
-            </p>
-          </div>
-          <a class="btn btn-ghost" href="#pricing">See tiers</a>
-        </div>
-      </div>
-    </section>
+closeModal.addEventListener('click', closeAuthModal);
+toggleRegister.addEventListener('click', () => openModal(!isRegister));
 
-    <section class="section" id="safety">
-      <div class="container">
-        <div class="section-head">
-          <h2>Safety & fraud prevention</h2>
-          <p>A layered system to discourage misuse and protect everyone.</p>
-        </div>
+authForm.addEventListener('submit', async (e) => {
+e.preventDefault();
+authSubmit.disabled = true;
 
-        <div class="grid-2">
-          <div class="panel">
-            <h3>Package accountability</h3>
-            <ul class="bullets">
-              <li>Declared contents and value</li>
-              <li>4–6 photos uploaded before handoff</li>
-              <li>Sender digital signature</li>
-              <li>Courier verification + signature on pickup</li>
-              <li>Recipient confirmation on delivery</li>
-            </ul>
-          </div>
+const payload = {
+email: document.getElementById('email').value,
+password: document.getElementById('password').value,
+};
 
-          <div class="panel">
-            <h3>Platform protections</h3>
-            <ul class="bullets">
-              <li>Identity verification (KYC-style)</li>
-              <li>Restricted item policy + reporting tools</li>
-              <li>Audit trail for disputes</li>
-              <li>Escrow payments reduce fraud</li>
-              <li>Ratings, reviews, and trust scores</li>
-            </ul>
-          </div>
-        </div>
+if (isRegister) {
+payload.name = document.getElementById('name').value;
+payload.role = document.getElementById('role').value;
+}
 
-        <div class="note">
-          <b>Important:</b> ZigaSwift is designed for <b>small, legal items</b> and follows airline baggage rules and restricted-item policies.
-        </div>
-      </div>
-    </section>
+try {
+const res = await fetch(`${backendUrl}/api/${isRegister ? 'register' : 'login'}`, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(payload),
+});
 
-    <section class="section alt" id="earn">
-      <div class="container two-col">
-        <div>
-          <h2>Earn while you travel</h2>
-          <p>
-            Turn unused luggage space into income. Couriers can earn <b>$40–$60+</b> per trip, with higher potential for top-rated couriers.
-          </p>
-          <ul class="checklist">
-            <li>No extra travel required</li>
-            <li>Choose trips you’re already taking</li>
-            <li>Unlock higher tiers with great service</li>
-          </ul>
-          <a class="btn" href="#courier">Apply as a courier</a>
-        </div>
-        <div class="earn-card">
-          <div class="earn-row">
-            <span>Bronze</span>
-            <span>1 delivery/trip</span>
-          </div>
-          <div class="earn-row">
-            <span>Silver</span>
-            <span>Up to 2 deliveries</span>
-          </div>
-          <div class="earn-row highlight">
-            <span>Gold / Elite</span>
-            <span>Up to 3 deliveries</span>
-          </div>
-          <div class="earn-foot">
-            Tier upgrades based on delivery count, rating, and reviews.
-          </div>
-        </div>
-      </div>
-    </section>
+const data = await res.json();
+if (!data.ok) throw new Error(data.error || 'Failed');
 
-    <section class="section" id="pricing">
-      <div class="container">
-        <div class="section-head">
-          <h2>Pricing model</h2>
-          <p>Simple, scalable, and marketplace-friendly.</p>
-        </div>
+localStorage.setItem('jwtToken', data.token);
+closeAuthModal();
+updateAuthSection();
+} catch (err) {
+authMessage.textContent = err.message;
+authMessage.style.color = 'red';
+} finally {
+authSubmit.disabled = false;
+}
+});
 
-        <div class="grid-3">
-          <div class="price">
-            <h3>Pay-per-delivery</h3>
-            <div class="price-big">10–20%</div>
-            <p>Service fee per completed delivery. Couriers receive the rest.</p>
-            <ul>
-              <li>Escrow payments</li>
-              <li>Delivery confirmation</li>
-              <li>Dispute support</li>
-            </ul>
-          </div>
+function updateAuthSection() {
+const token = localStorage.getItem('jwtToken');
+if (token) {
+authSection.innerHTML = `
+<span>Welcome!</span>
+<a href="${localStorage.getItem('role') === 'courier' ? 'courier-dashboard.html' : 'sender-dashboard.html'}">Dashboard</a>
+<button class="logout" id="logoutBtn">Logout</button>
+`;
+document.getElementById('logoutBtn').addEventListener('click', () => {
+localStorage.removeItem('jwtToken');
+updateAuthSection();
+});
+} else {
+authSection.innerHTML = `<button class="btn btn-sm btn-ghost" id="signInBtn">Sign In</button>`;
+document.getElementById('signInBtn').addEventListener('click', () => openModal(false));
+}
+}
 
-          <div class="price featured">
-            <h3>Premium</h3>
-            <div class="price-big">Optional</div>
-            <p>Priority matching and trusted badges for serious users.</p>
-            <ul>
-              <li>Priority verification</li>
-              <li>Higher visibility</li>
-              <li>Faster matching</li>
-            </ul>
-          </div>
-
-          <div class="price">
-            <h3>Business</h3>
-            <div class="price-big">Subscription</div>
-            <p>For small businesses and sellers with repeat shipping needs.</p>
-            <ul>
-              <li>Bulk requests</li>
-              <li>Analytics</li>
-              <li>Dedicated support</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="waitlist">
-      <div class="container two-col">
-        <div>
-          <h2>Join the ZigaSwift waitlist</h2>
-          <p>
-            Get updates on launch cities, early access, and courier onboarding. We’ll notify you as soon as your hub opens.
-          </p>
-          <div class="small">
-            By joining, you agree to receive product updates. You can unsubscribe anytime.
-          </div>
-        </div>
-
-        <div class="form-card">
-          <form id="waitlistForm" novalidate>
-            <label>
-              Full name
-              <input type="text" name="name" placeholder="Jane Doe" required />
-            </label>
-
-            <label>
-              Email
-              <input type="email" name="email" placeholder="jane@email.com" required />
-            </label>
-
-            <label>
-              City / Airport hub
-              <input type="text" name="city" placeholder="Dallas (DFW)" required />
-            </label>
-
-            <button class="btn" type="submit">Join waitlist</button>
-            <p class="form-msg" id="waitlistMsg" aria-live="polite"></p>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="courier">
-      <div class="container two-col">
-        <div>
-          <h2>Become a courier</h2>
-          <p>
-            If you travel often, you can earn while you fly. Apply to join our verified courier network and unlock higher tiers with great service.
-          </p>
-          <ul class="checklist">
-            <li>Verified identity</li>
-            <li>Choose your routes</li>
-            <li>Earn per delivery</li>
-          </ul>
-        </div>
-
-        <div class="form-card">
-          <form id="courierForm" novalidate>
-            <label>
-              Full name
-              <input type="text" name="name" placeholder="Alex Johnson" required />
-            </label>
-
-            <label>
-              Email
-              <input type="email" name="email" placeholder="alex@email.com" required />
-            </label>
-
-            <label>
-              Typical route
-              <input type="text" name="route" placeholder="Chicago → New York" required />
-            </label>
-
-            <button class="btn" type="submit">Apply</button>
-            <p class="form-msg" id="courierMsg" aria-live="polite"></p>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="faq">
-      <div class="container">
-        <div class="section-head">
-          <h2>FAQ</h2>
-          <p>Quick answers for early users.</p>
-        </div>
-
-        <div class="faq">
-          <details>
-            <summary>What items are allowed?</summary>
-            <p>Only small, legal items that comply with airline baggage rules and ZigaSwift’s restricted-item policy.</p>
-          </details>
-          <details>
-            <summary>How do you reduce fraud?</summary>
-            <p>Package declarations, 4–6 photos, dual verification (sender + courier), digital signatures, escrow payments, and ratings.</p>
-          </details>
-          <details>
-            <summary>How do couriers get paid?</summary>
-            <p>Senders pay upfront. Funds are held and released to couriers after delivery confirmation.</p>
-          </details>
-          <details>
-            <summary>How do courier tiers work?</summary>
-            <p>Higher ratings and consistent performance unlock Silver and Gold/Elite tiers, including up to 3 deliveries per trip.</p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div class="container footer-inner">
-        <div>
-          <div class="footer-brand">
-            <span class="brand-mark" aria-hidden="true">✓</span>
-            <span class="brand-name">ZigaSwift</span>
-          </div>
-          <div class="small">© <span id="year"></span> ZigaSwift. All rights reserved.</div>
-        </div>
-
-        <div class="footer-links">
-          <a href="#safety">Safety</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#waitlist">Waitlist</a>
-          <a href="#top">Back to top</a>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <script src="script.js"></script>
+// Check on load
+updateAuthSection();
+</script>
 </body>
 </html>
