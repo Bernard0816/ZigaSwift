@@ -71,6 +71,8 @@ color: var(--text);
 font-size: 1rem;
 }
 .request-form textarea { resize: vertical; min-height: 80px; }
+.item-search-wrapper { position: relative; }
+#itemOther { display: none; margin-top: 12px; }
 .photo-upload {
 display: grid;
 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -80,7 +82,7 @@ margin-top: 12px;
 .photo-preview {
 position: relative;
 width: 100%;
-padding-top: 100%; /* 1:1 aspect */
+padding-top: 100%; /* square aspect ratio */
 background: #0e1628;
 border: 2px dashed var(--border);
 border-radius: 8px;
@@ -88,8 +90,9 @@ overflow: hidden;
 }
 .photo-preview img {
 position: absolute;
-top: 0; left: 0; right: 0; bottom: 0;
-width: 100%; height: 100%;
+inset: 0;
+width: 100%;
+height: 100%;
 object-fit: cover;
 }
 .photo-preview.empty {
@@ -102,13 +105,35 @@ text-align: center;
 padding: 10px;
 }
 .photos-count {
-margin-top: 8px;
+margin: 8px 0 12px;
 color: var(--muted);
-font-size: 0.9rem;
+font-size: 0.95rem;
 }
 .photos-count strong { color: var(--text); }
-.item-search-wrapper { position: relative; }
-#itemOther { display: none; margin-top: 12px; }
+.help-link {
+color: var(--accent);
+cursor: pointer;
+text-decoration: underline;
+font-size: 0.9rem;
+}
+details {
+margin-top: 16px;
+font-size: 0.95rem;
+color: var(--muted);
+}
+summary {
+color: var(--accent);
+font-weight: 500;
+cursor: pointer;
+}
+.restricted-content {
+margin-top: 12px;
+padding: 16px;
+background: rgba(35,48,79,0.4);
+border-radius: 10px;
+border: 1px solid var(--border);
+}
+.restricted-content strong { color: var(--text); }
 .matches-grid {
 display: grid;
 gap: 20px;
@@ -156,9 +181,9 @@ cursor: pointer;
 <label>Weight (kg)</label>
 <input type="number" id="weight" step="0.1" min="0.1" max="20" placeholder="e.g. 2.5" required />
 
-<label>Item Category (select or search)</label>
+<label>Item Category (search or select)</label>
 <div class="item-search-wrapper">
-<input list="itemOptions" id="itemSelect" placeholder="Search or select item..." required />
+<input list="itemOptions" id="itemSelect" placeholder="e.g. Clothing, Cellphone..." required />
 <datalist id="itemOptions">
 <option value="Clothing"></option>
 <option value="Jewelry"></option>
@@ -177,12 +202,12 @@ cursor: pointer;
 </div>
 
 <div id="itemOther">
-<label>Specific Item / Other Description</label>
-<input type="text" id="itemOtherInput" placeholder="e.g. Vintage silver necklace, brand new iPhone case..." />
+<label>Specific / Other Item Description</label>
+<input type="text" id="itemOtherInput" placeholder="e.g. Vintage silver necklace, brand new phone case..." />
 </div>
 
 <label>Additional Contents Description</label>
-<textarea id="contents" rows="3" placeholder="Any extra details (color, condition, special handling needs...)"></textarea>
+<textarea id="contents" rows="3" placeholder="Extra details (color, condition, special handling needs...)"></textarea>
 
 <label>Declared Value ($)</label>
 <input type="number" id="value" step="0.01" min="0" placeholder="e.g. 150" required />
@@ -197,9 +222,45 @@ cursor: pointer;
 <label>Upload Photos of the Item (4–6 recommended)</label>
 <input type="file" id="photos" accept="image/*" multiple />
 <div class="photos-count">Uploaded: <strong id="photoCount">0</strong>/6 photos</div>
-<div class="photo-upload" id="photoPreviews"></div>
+<div class="photo-upload" id="photoPreviews">
+<div class="photo-preview empty">No photos selected yet</div>
+</div>
 
-<button type="submit" class="btn" style="margin-top: 24px;">Submit Request & Find Matches</button>
+<small style="color: var(--muted); display: block; margin: 16px 0 8px;">
+We accept small, legal items that fit in carry-on luggage.
+<span class="help-link" onclick="document.getElementById('restrictedItems').open = !document.getElementById('restrictedItems').open">
+View full allowed & restricted list →
+</span>
+</small>
+
+<details id="restrictedItems">
+<summary>What can / can't I send?</summary>
+<div class="restricted-content">
+<strong>Commonly accepted items:</strong><br>
+• Clothing & shoes<br>
+• Jewelry & watches<br>
+• Cell phones & small electronics<br>
+• Documents, books, paperwork<br>
+• Cosmetics (non-aerosol, small quantities)<br>
+• Accessories, small gifts<br>
+• Personal medication (non-controlled)<br><br>
+
+<strong>Not allowed (safety & airline rules):</strong><br>
+• Liquids / gels > 100 ml<br>
+• Perishable food or plants<br>
+• Weapons, ammunition, explosives<br>
+• Hazardous materials (batteries >100Wh without approval, chemicals)<br>
+• Illegal substances or counterfeit goods<br>
+• Large/heavy items (>15 kg or oversized)<br><br>
+
+If your item is not listed, choose “Other item” and describe it clearly.<br>
+All requests are reviewed for compliance.
+</div>
+</details>
+
+<button type="submit" class="btn" style="margin-top: 32px; width: 100%; padding: 14px; font-size: 1.1rem;">
+Submit Request & Find Matches
+</button>
 </form>
 </section>
 
@@ -219,7 +280,7 @@ localStorage.removeItem('jwtToken');
 window.location.href = '/';
 });
 
-// Show/hide "Other" field
+// Show/hide "Other item" field
 const itemSelect = document.getElementById('itemSelect');
 const otherWrapper = document.getElementById('itemOther');
 itemSelect.addEventListener('input', () => {
@@ -231,51 +292,38 @@ document.getElementById('itemOtherInput').value = '';
 }
 });
 
-// Photo preview + count (limit to 6)
+// Photo preview + count (max 6)
 const photoInput = document.getElementById('photos');
 const photoPreviews = document.getElementById('photoPreviews');
 const photoCountEl = document.getElementById('photoCount');
 
 photoInput.addEventListener('change', () => {
 photoPreviews.innerHTML = '';
-const files = Array.from(photoInput.files).slice(0, 6); // max 6
+const files = Array.from(photoInput.files).slice(0, 6);
 photoCountEl.textContent = files.length;
+
+if (files.length === 0) {
+photoPreviews.innerHTML = '<div class="photo-preview empty">No photos selected yet</div>';
+return;
+}
 
 files.forEach(file => {
 const reader = new FileReader();
 reader.onload = e => {
 const div = document.createElement('div');
 div.className = 'photo-preview';
-div.innerHTML = `<img src="${e.target.result}" alt="Item photo preview">`;
+div.innerHTML = `<img src="${e.target.result}" alt="Item preview">`;
 photoPreviews.appendChild(div);
 };
 reader.readAsDataURL(file);
 });
-
-if (files.length === 0) {
-photoPreviews.innerHTML = '<div class="photo-preview empty">No photos selected yet</div>';
-}
 });
 
-// Form submit placeholder
+// Form submit (placeholder)
 document.getElementById('requestForm').addEventListener('submit', (e) => {
 e.preventDefault();
-
-// Example: collect data (later send to backend)
-const formData = new FormData(e.target);
-const photos = photoInput.files; // can append to FormData if using fetch
-
-console.log('Form submitted:', {
-pickup: formData.get('pickup'),
-dropoff: formData.get('dropoff'),
-// ... other fields
-item: itemSelect.value,
-otherItem: document.getElementById('itemOtherInput').value,
-photosCount: photos.length
-});
-
-alert('Request submitted! (Connect this to your backend /api/shipment/request endpoint)');
-// Real code: fetch('/api/shipment/request', { method: 'POST', body: formData, headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
+alert('Request submitted! (Connect this to your backend later)');
+// In real app → collect FormData and send via fetch with JWT
 });
 </script>
 </body>
