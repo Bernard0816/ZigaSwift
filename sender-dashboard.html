@@ -4,44 +4,188 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sender Dashboard - ZigaSwift</title>
-<link rel="stylesheet" href="styles.css" /> <!-- Reuse your main styles if possible -->
 <style>
-body { background: #0b1220; color: #e7eefc; font-family: system-ui, sans-serif; padding: 20px; }
-.container { max-width: 900px; margin: 0 auto; }
-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-h1 { margin: 0; }
-.btn { padding: 10px 20px; background: #2b76ff; color: white; border: none; border-radius: 8px; cursor: pointer; }
+:root {
+--bg: #0b1220;
+--card: #121a2c;
+--text: #e7eefc;
+--muted: #9ab0d6;
+--accent: #2b76ff;
+--success: #3ddc97;
+--border: #22304f;
+--danger: #ff6b6b;
+}
+body {
+background: var(--bg);
+color: var(--text);
+font-family: system-ui, sans-serif;
+margin: 0;
+padding: 20px;
+line-height: 1.6;
+}
+.container { max-width: 1000px; margin: 0 auto; }
+header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 40px;
+}
+h1 { margin: 0; font-size: 2.2rem; }
+.btn {
+padding: 12px 24px;
+background: var(--accent);
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+}
 .btn:hover { background: #1f5ed8; }
-.section { background: #121a2c; border: 1px solid #22304f; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
-.request-form label { display: block; margin: 12px 0 6px; color: #9ab0d6; }
-.request-form input, .request-form select, .request-form textarea { width: 100%; padding: 12px; background: #0e1628; border: 1px solid #22304f; border-radius: 8px; color: white; }
-.matches-grid { display: grid; gap: 16px; }
-.match-card { background: #1a2742; padding: 16px; border-radius: 8px; border: 1px solid #22304f; }
-.match-card h3 { margin: 0 0 8px; color: #3ddc97; }
-.match-card button { margin-top: 12px; padding: 8px 16px; background: #1f9d67; color: white; border: none; border-radius: 6px; cursor: pointer; }
+.section {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: 14px;
+padding: 28px;
+margin-bottom: 32px;
+}
+h2 {
+margin-top: 0;
+font-size: 1.6rem;
+color: var(--success);
+}
+.request-form label {
+display: block;
+margin: 16px 0 8px;
+color: var(--muted);
+font-weight: 500;
+}
+.request-form input,
+.request-form select,
+.request-form textarea {
+width: 100%;
+padding: 12px;
+background: #0e1628;
+border: 1px solid var(--border);
+border-radius: 8px;
+color: var(--text);
+font-size: 1rem;
+}
+.request-form textarea { resize: vertical; min-height: 80px; }
+.photo-upload {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+gap: 16px;
+margin-top: 12px;
+}
+.photo-preview {
+position: relative;
+width: 100%;
+padding-top: 100%; /* 1:1 aspect */
+background: #0e1628;
+border: 2px dashed var(--border);
+border-radius: 8px;
+overflow: hidden;
+}
+.photo-preview img {
+position: absolute;
+top: 0; left: 0; right: 0; bottom: 0;
+width: 100%; height: 100%;
+object-fit: cover;
+}
+.photo-preview.empty {
+display: flex;
+align-items: center;
+justify-content: center;
+color: var(--muted);
+font-size: 0.9rem;
+text-align: center;
+padding: 10px;
+}
+.photos-count {
+margin-top: 8px;
+color: var(--muted);
+font-size: 0.9rem;
+}
+.photos-count strong { color: var(--text); }
+.item-search-wrapper { position: relative; }
+#itemOther { display: none; margin-top: 12px; }
+.matches-grid {
+display: grid;
+gap: 20px;
+}
+.match-card {
+background: #1a2742;
+padding: 20px;
+border-radius: 10px;
+border: 1px solid var(--border);
+}
+.match-card h3 {
+margin: 0 0 12px;
+color: var(--success);
+}
+.match-card button {
+margin-top: 12px;
+padding: 10px 20px;
+background: var(--success);
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+}
+.match-card button:hover { background: #2eb57f; }
 </style>
 </head>
 <body>
 <div class="container">
 <header>
 <h1>Sender Dashboard</h1>
-<div>
 <button class="btn" id="logout">Logout</button>
-</div>
 </header>
 
 <!-- Request a new shipment -->
 <section class="section">
 <h2>Request New Delivery</h2>
 <form class="request-form" id="requestForm">
+
 <label>Pickup Location</label>
 <input type="text" id="pickup" placeholder="e.g. Houston, TX" required />
 
 <label>Dropoff Location</label>
-<input type="text" id="dropoff" placeholder="e.g. Lagos, Nigeria" required />
+<input type="text" id="dropoff" placeholder="e.g. Austin, TX" required />
 
 <label>Weight (kg)</label>
-<input type="number" id="weight" step="0.1" min="0.1" placeholder="e.g. 15" required />
+<input type="number" id="weight" step="0.1" min="0.1" max="20" placeholder="e.g. 2.5" required />
+
+<label>Item Category (select or search)</label>
+<div class="item-search-wrapper">
+<input list="itemOptions" id="itemSelect" placeholder="Search or select item..." required />
+<datalist id="itemOptions">
+<option value="Clothing"></option>
+<option value="Jewelry"></option>
+<option value="Cellphone"></option>
+<option value="Documents / Papers"></option>
+<option value="Accessories (bags, wallets, belts)"></option>
+<option value="Books / Magazines"></option>
+<option value="Cosmetics / Makeup"></option>
+<option value="Small Electronics (chargers, earbuds)"></option>
+<option value="Shoes"></option>
+<option value="Watches"></option>
+<option value="Small Gifts / Souvenirs"></option>
+<option value="Medication (personal use, non-prescription)"></option>
+<option value="Other item (specify below)"></option>
+</datalist>
+</div>
+
+<div id="itemOther">
+<label>Specific Item / Other Description</label>
+<input type="text" id="itemOtherInput" placeholder="e.g. Vintage silver necklace, brand new iPhone case..." />
+</div>
+
+<label>Additional Contents Description</label>
+<textarea id="contents" rows="3" placeholder="Any extra details (color, condition, special handling needs...)"></textarea>
+
+<label>Declared Value ($)</label>
+<input type="number" id="value" step="0.01" min="0" placeholder="e.g. 150" required />
 
 <label>Priority</label>
 <select id="priority">
@@ -50,38 +194,88 @@ h1 { margin: 0; }
 <option value="rush">Rush</option>
 </select>
 
-<label>Contents Description</label>
-<textarea id="contents" rows="3" placeholder="Describe what you're sending..." required></textarea>
+<label>Upload Photos of the Item (4–6 recommended)</label>
+<input type="file" id="photos" accept="image/*" multiple />
+<div class="photos-count">Uploaded: <strong id="photoCount">0</strong>/6 photos</div>
+<div class="photo-upload" id="photoPreviews"></div>
 
-<label>Declared Value ($)</label>
-<input type="number" id="value" step="0.01" min="0" placeholder="e.g. 250" required />
-
-<button type="submit" class="btn">Submit Request & Find Matches</button>
+<button type="submit" class="btn" style="margin-top: 24px;">Submit Request & Find Matches</button>
 </form>
 </section>
 
-<!-- Matched couriers (will populate after request) -->
+<!-- Matched couriers -->
 <section class="section">
 <h2>Available Couriers</h2>
 <div class="matches-grid" id="matchesList">
-<!-- Matches will appear here as cards -->
-<p>No matches yet. Submit a request above.</p>
+<p>No matches yet. Submit a request above to find verified couriers.</p>
 </div>
 </section>
 </div>
 
 <script>
-// Basic logout
+// Logout
 document.getElementById('logout').addEventListener('click', () => {
 localStorage.removeItem('jwtToken');
-window.location.href = '/'; // back to home
+window.location.href = '/';
 });
 
-// Form submit (placeholder - we'll connect to backend later)
+// Show/hide "Other" field
+const itemSelect = document.getElementById('itemSelect');
+const otherWrapper = document.getElementById('itemOther');
+itemSelect.addEventListener('input', () => {
+if (itemSelect.value === 'Other item (specify below)') {
+otherWrapper.style.display = 'block';
+} else {
+otherWrapper.style.display = 'none';
+document.getElementById('itemOtherInput').value = '';
+}
+});
+
+// Photo preview + count (limit to 6)
+const photoInput = document.getElementById('photos');
+const photoPreviews = document.getElementById('photoPreviews');
+const photoCountEl = document.getElementById('photoCount');
+
+photoInput.addEventListener('change', () => {
+photoPreviews.innerHTML = '';
+const files = Array.from(photoInput.files).slice(0, 6); // max 6
+photoCountEl.textContent = files.length;
+
+files.forEach(file => {
+const reader = new FileReader();
+reader.onload = e => {
+const div = document.createElement('div');
+div.className = 'photo-preview';
+div.innerHTML = `<img src="${e.target.result}" alt="Item photo preview">`;
+photoPreviews.appendChild(div);
+};
+reader.readAsDataURL(file);
+});
+
+if (files.length === 0) {
+photoPreviews.innerHTML = '<div class="photo-preview empty">No photos selected yet</div>';
+}
+});
+
+// Form submit placeholder
 document.getElementById('requestForm').addEventListener('submit', (e) => {
 e.preventDefault();
-alert('Request submitted! (This will call backend later)');
-// Here: call /api/shipment/request with token in headers
+
+// Example: collect data (later send to backend)
+const formData = new FormData(e.target);
+const photos = photoInput.files; // can append to FormData if using fetch
+
+console.log('Form submitted:', {
+pickup: formData.get('pickup'),
+dropoff: formData.get('dropoff'),
+// ... other fields
+item: itemSelect.value,
+otherItem: document.getElementById('itemOtherInput').value,
+photosCount: photos.length
+});
+
+alert('Request submitted! (Connect this to your backend /api/shipment/request endpoint)');
+// Real code: fetch('/api/shipment/request', { method: 'POST', body: formData, headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` } })
 });
 </script>
 </body>
