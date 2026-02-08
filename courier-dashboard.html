@@ -4,45 +4,211 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Courier Dashboard - ZigaSwift</title>
-<link rel="stylesheet" href="styles.css" />
 <style>
-body { background: #0b1220; color: #e7eefc; font-family: system-ui, sans-serif; padding: 20px; }
-.container { max-width: 900px; margin: 0 auto; }
-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-h1 { margin: 0; }
-.btn { padding: 10px 20px; background: #2b76ff; color: white; border: none; border-radius: 8px; cursor: pointer; }
-.btn:hover { background: #1f5ed8; }
-.section { background: #121a2c; border: 1px solid #22304f; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
-.shipment-card { background: #1a2742; padding: 16px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #22304f; }
-.shipment-card h3 { margin: 0 0 8px; color: #3ddc97; }
-.shipment-card button { margin-top: 12px; padding: 8px 16px; background: #1f9d67; color: white; border: none; border-radius: 6px; cursor: pointer; }
+:root {
+--bg: #0b1220;
+--card: #121a2c;
+--accent: #2b76ff;
+--success: #3ddc97;
+--text: #e7eefc;
+--muted: #9ab0d6;
+--border: #22304f;
+}
+body {
+background: var(--bg);
+color: var(--text);
+font-family: system-ui, sans-serif;
+margin: 0;
+padding: 20px;
+line-height: 1.5;
+}
+.container {
+max-width: 1000px;
+margin: 0 auto;
+}
+header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 32px;
+}
+h1 {
+margin: 0;
+font-size: 28px;
+}
+.btn {
+padding: 10px 20px;
+background: var(--accent);
+color: white;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+}
+.btn:hover {
+background: #1f5ed8;
+}
+.btn-secondary {
+background: #1a2742;
+border: 1px solid var(--border);
+}
+.section {
+background: var(--card);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 24px;
+margin-bottom: 32px;
+}
+h2 {
+margin-top: 0;
+font-size: 20px;
+color: var(--success);
+}
+.shipment-card {
+background: #1a2742;
+padding: 18px;
+border-radius: 10px;
+margin-bottom: 16px;
+border: 1px solid var(--border);
+}
+.shipment-card h3 {
+margin: 0 0 10px;
+color: var(--success);
+font-size: 18px;
+}
+.shipment-info {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+font-size: 14px;
+color: var(--muted);
+}
+.shipment-info strong {
+color: var(--text);
+}
+.action-btn {
+margin-top: 12px;
+padding: 8px 16px;
+background: var(--success);
+color: white;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+}
+.action-btn:hover {
+background: #2eb57f;
+}
+.profile-header {
+display: flex;
+align-items: center;
+gap: 16px;
+margin-bottom: 20px;
+}
+#profilePic {
+width: 80px;
+height: 80px;
+border-radius: 50%;
+object-fit: cover;
+border: 2px solid var(--accent);
+background: #0e1628;
+}
+.profile-form {
+display: flex;
+flex-direction: column;
+gap: 12px;
+max-width: 400px;
+}
+input[type="text"], input[type="file"] {
+padding: 10px;
+background: #0e1628;
+border: 1px solid var(--border);
+border-radius: 6px;
+color: var(--text);
+}
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+gap: 16px;
+}
+.stat-card {
+background: #1a2742;
+padding: 16px;
+border-radius: 8px;
+text-align: center;
+border: 1px solid var(--border);
+}
+.stat-value {
+font-size: 24px;
+font-weight: bold;
+color: var(--accent);
+}
+.empty-state {
+color: var(--muted);
+text-align: center;
+padding: 40px 0;
+}
 </style>
 </head>
 <body>
 <div class="container">
 <header>
 <h1>Courier Dashboard</h1>
-<div>
 <button class="btn" id="logout">Logout</button>
-</div>
 </header>
 
-<!-- Available shipments -->
+<!-- Courier Profile Section -->
 <section class="section">
-<h2>Available Shipments</h2>
-<div id="shipmentsList">
-<!-- Shipments will appear here as cards -->
-<p>No available shipments matching your routes yet.</p>
+<h2>Your Profile</h2>
+<div class="profile-header">
+<img id="profilePic" src="https://via.placeholder.com/80?text=You" alt="Profile Picture">
+<div>
+<h3 id="courierName">Courier Name</h3>
+<p id="courierEmail" style="margin:4px 0 0; color:var(--muted);">email@example.com</p>
+</div>
+</div>
+
+<div class="profile-form">
+<label>
+Update Name:
+<input type="text" id="nameInput" placeholder="Your full name">
+</label>
+<label>
+Update Profile Picture:
+<input type="file" id="picInput" accept="image/*">
+</label>
+<button class="btn" id="saveProfile">Save Profile</button>
 </div>
 </section>
 
-<!-- Your stats / tier (placeholder) -->
+<!-- Stats / Tier -->
 <section class="section">
 <h2>Your Stats</h2>
-<p>Current Tier: <strong>Bronze</strong></p>
-<p>Max Capacity: 5 kg per trip</p>
-<p>Deliveries Completed: 0</p>
-<p>Rating: N/A</p>
+<div class="stats-grid">
+<div class="stat-card">
+<div>Current Tier</div>
+<div class="stat-value" id="tier">Bronze</div>
+</div>
+<div class="stat-card">
+<div>Available Capacity</div>
+<div class="stat-value" id="capacity">8 kg</div>
+</div>
+<div class="stat-card">
+<div>Deliveries Completed</div>
+<div class="stat-value" id="deliveries">0</div>
+</div>
+<div class="stat-card">
+<div>Rating</div>
+<div class="stat-value" id="rating">N/A</div>
+</div>
+</div>
+</section>
+
+<!-- Available Shipments -->
+<section class="section">
+<h2>Available Shipments</h2>
+<div id="shipmentsList">
+<div class="empty-state">No available shipments matching your routes yet.</div>
+</div>
 </section>
 </div>
 
@@ -53,7 +219,107 @@ localStorage.removeItem('jwtToken');
 window.location.href = '/';
 });
 
-// Placeholder: later fetch from /api/courier/available-shipments
+// Profile Management (local for now — replace with API later)
+const profilePic = document.getElementById('profilePic');
+const courierName = document.getElementById('courierName');
+const nameInput = document.getElementById('nameInput');
+const picInput = document.getElementById('picInput');
+const saveProfileBtn = document.getElementById('saveProfile');
+
+// Load saved profile from localStorage
+function loadProfile() {
+const savedName = localStorage.getItem('courierName') || 'Courier Name';
+const savedPic = localStorage.getItem('courierPic') || 'https://via.placeholder.com/80?text=You';
+courierName.textContent = savedName;
+nameInput.value = savedName;
+profilePic.src = savedPic;
+}
+loadProfile();
+
+// Save profile
+saveProfileBtn.addEventListener('click', () => {
+const newName = nameInput.value.trim();
+if (newName) {
+localStorage.setItem('courierName', newName);
+courierName.textContent = newName;
+}
+
+// Picture preview & save (base64)
+if (picInput.files && picInput.files[0]) {
+const reader = new FileReader();
+reader.onload = (e) => {
+const base64 = e.target.result;
+localStorage.setItem('courierPic', base64);
+profilePic.src = base64;
+};
+reader.readAsDataURL(picInput.files[0]);
+}
+
+alert('Profile updated!');
+});
+
+// Available Shipments — placeholder data (replace with real fetch)
+const shipments = [
+{
+id: 1,
+title: "Small Electronics Package",
+dispatchDate: "2026-02-10",
+pickup: "Houston, TX 77002",
+dropoff: "Austin, TX 78701",
+weight: "2.3 kg",
+pay: "$45"
+},
+{
+id: 2,
+title: "Medical Documents",
+dispatchDate: "2026-02-11",
+pickup: "Dallas, TX 75201",
+dropoff: "San Antonio, TX 78205",
+weight: "0.8 kg",
+pay: "$38"
+}
+];
+
+function renderShipments() {
+const container = document.getElementById('shipmentsList');
+if (shipments.length === 0) {
+container.innerHTML = '<div class="empty-state">No available shipments matching your routes yet.</div>';
+return;
+}
+
+container.innerHTML = '';
+shipments.forEach(shipment => {
+const card = document.createElement('div');
+card.className = 'shipment-card';
+card.innerHTML = `
+<h3>${shipment.title}</h3>
+<div class="shipment-info">
+<div><strong>Dispatch Date:</strong> ${shipment.dispatchDate}</div>
+<div><strong>Pickup Location:</strong> ${shipment.pickup}</div>
+<div><strong>Dropoff Location:</strong> ${shipment.dropoff}</div>
+<div><strong>Weight / Capacity Needed:</strong> ${shipment.weight}</div>
+</div>
+<button class="action-btn">Accept Shipment (${shipment.pay})</button>
+`;
+container.appendChild(card);
+});
+}
+
+renderShipments();
+
+// TODO: Replace with real API fetch when ready
+// async function loadShipments() {
+// try {
+// const res = await fetch('/api/courier/available-shipments', {
+// headers: { Authorization: `Bearer ${localStorage.getItem('jwtToken')}` }
+// });
+// const data = await res.json();
+// // render from data...
+// } catch (err) {
+// console.error('Failed to load shipments', err);
+// }
+// }
+// loadShipments();
 </script>
 </body>
 </html>
