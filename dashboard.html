@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ZigaSwift Dashboard — Send & Carry</title>
+<title>ZigaSwift Dashboard — Verified Access</title>
 
 <style>
 :root {
@@ -35,7 +35,7 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 gap:14px;
-margin-bottom:22px;
+margin-bottom:18px;
 }
 .brand{
 display:flex;align-items:center;gap:10px;
@@ -48,19 +48,15 @@ background:linear-gradient(135deg, rgba(43,118,255,.95), rgba(61,220,151,.90));
 color:#081021;font-weight:900;
 box-shadow:0 12px 28px rgba(43,118,255,.18);
 }
-h1{margin:0;font-size:1.4rem}
-.sub{
-margin:4px 0 0;
-color:var(--muted);
-font-size:.95rem;
-}
+h1{margin:0;font-size:1.35rem}
+.sub{margin:4px 0 0;color:var(--muted);font-size:.95rem}
 
 /* Buttons */
 .btn{
 padding:12px 18px;
 background:var(--accent);
 color:#fff;border:0;border-radius:10px;
-cursor:pointer;font-weight:700;
+cursor:pointer;font-weight:800;
 transition:transform .15s, background .2s;
 white-space:nowrap;
 }
@@ -72,13 +68,23 @@ border:1px solid var(--border);
 color:var(--text);
 }
 .btn-ghost:hover{background:rgba(255,255,255,.09)}
+.btn-sm{padding:10px 14px;border-radius:999px}
+.btn-green{background:var(--success);color:#06151f}
+.btn-green:hover{background:#2eb57f}
+.btn-danger{background:var(--danger)}
+.btn-danger:hover{background:#ff5252}
+.btn:disabled{
+opacity:.55;
+cursor:not-allowed;
+transform:none;
+}
 
 /* Tabs */
 .tabs{
 display:flex;
 gap:10px;
 flex-wrap:wrap;
-margin:0 0 18px;
+margin:0 0 16px;
 }
 .tab{
 padding:10px 14px;
@@ -87,7 +93,7 @@ border:1px solid var(--border);
 background:rgba(255,255,255,.04);
 color:var(--muted);
 cursor:pointer;
-font-weight:800;
+font-weight:900;
 }
 .tab.active{
 background:linear-gradient(135deg, rgba(43,118,255,.35), rgba(61,220,151,.22));
@@ -100,23 +106,99 @@ border-color:rgba(43,118,255,.45);
 background:var(--card);
 border:1px solid var(--border);
 border-radius:14px;
-padding:24px;
-margin-bottom:22px;
+padding:22px;
+margin-bottom:18px;
 }
 .section h2{
 margin:0 0 14px;
 font-size:1.35rem;
 color:var(--success);
 }
-
 .hidden{display:none!important}
 
-/* Sender form styles (from your sender page) */
+/* Helper / Gate */
+.helper{
+margin:0 0 16px;
+padding:14px 16px;
+border-radius:14px;
+border:1px solid rgba(43,118,255,.30);
+background:rgba(43,118,255,.10);
+color:var(--muted);
+}
+.helper b{color:var(--text)}
+.locked-banner{
+margin:0 0 16px;
+padding:14px 16px;
+border-radius:14px;
+border:1px solid rgba(255,107,107,.35);
+background:rgba(255,107,107,.10);
+color:var(--muted);
+}
+.locked-banner b{color:var(--text)}
+
+/* Verification UI */
+.verify-list{
+border:1px solid var(--border);
+border-radius:14px;
+overflow:hidden;
+}
+.verify-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:14px;
+padding:16px 16px;
+background:rgba(255,255,255,.02);
+border-bottom:1px solid var(--border);
+}
+.verify-item:last-child{border-bottom:0}
+.verify-left{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+.verify-title{
+font-size:1.25rem;
+font-weight:950;
+margin:0;
+color:var(--text);
+}
+.verify-status{
+font-size:1.05rem;
+font-weight:900;
+}
+.status-pending{color:var(--danger)}
+.status-complete{color:var(--success)}
+.verify-actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:flex-end;
+}
+.pill{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:8px 12px;
+border-radius:999px;
+border:1px solid var(--border);
+background:rgba(255,255,255,.03);
+color:var(--muted);
+font-weight:800;
+}
+.pill .dot{
+width:10px;height:10px;border-radius:50%;
+background:var(--danger);
+}
+.pill.ok .dot{background:var(--success)}
+.small{color:var(--muted);font-size:.92rem;margin-top:10px}
+
+/* Sender form styles (kept from your sender page, simplified) */
 .request-form label{
 display:block;
 margin:16px 0 8px;
 color:var(--muted);
-font-weight:600;
+font-weight:650;
 }
 .request-form input,
 .request-form select,
@@ -132,7 +214,6 @@ font-size:1rem;
 .request-form textarea{resize:vertical;min-height:80px}
 .item-search-wrapper{position:relative}
 #itemOther{display:none;margin-top:12px}
-
 .photo-upload{
 display:grid;
 grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
@@ -165,7 +246,7 @@ font-size:.95rem;
 .photos-count strong{color:var(--text)}
 .help-link{color:var(--accent);cursor:pointer;text-decoration:underline;font-size:.9rem}
 details{margin-top:16px;font-size:.95rem;color:var(--muted)}
-summary{color:var(--accent);font-weight:650;cursor:pointer}
+summary{color:var(--accent);font-weight:700;cursor:pointer}
 .restricted-content{
 margin-top:12px;
 padding:16px;
@@ -174,7 +255,6 @@ border-radius:12px;
 border:1px solid var(--border);
 }
 .restricted-content strong{color:var(--text)}
-
 .matches-grid{display:grid;gap:16px}
 .match-card{
 background:#1a2742;
@@ -188,11 +268,11 @@ margin-top:10px;
 padding:10px 16px;
 background:var(--success);
 color:#fff;border:0;border-radius:10px;
-cursor:pointer;font-weight:800;
+cursor:pointer;font-weight:900;
 }
 .match-card button:hover{background:#2eb57f}
 
-/* Courier styles (from your courier page) */
+/* Courier styles (kept from your courier page) */
 .profile-header{
 display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap;
 }
@@ -212,7 +292,6 @@ border-radius:10px;
 color:var(--text);
 font-size:1rem;
 }
-
 .stats-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
@@ -227,14 +306,12 @@ border:1px solid var(--border);
 }
 .stat-label{font-size:.95rem;color:var(--muted);margin-bottom:8px}
 .stat-value{font-size:1.9rem;font-weight:900;color:var(--accent)}
-
 .availability-control{
 display:flex;flex-direction:column;align-items:center;gap:12px;
 }
-.status-text{font-size:1.05rem;font-weight:800}
+.status-text{font-size:1.05rem;font-weight:900}
 .status-online{color:var(--success)}
 .status-offline{color:var(--danger)}
-
 .switch{position:relative;display:inline-block;width:74px;height:38px}
 .switch input{opacity:0;width:0;height:0}
 .slider{
@@ -250,7 +327,7 @@ input:checked + .slider{background-color:var(--accent)}
 input:checked + .slider:before{transform:translateX(36px)}
 .slider:after{
 position:absolute;top:50%;transform:translateY(-50%);
-font-size:.85rem;font-weight:900;color:white;
+font-size:.85rem;font-weight:950;color:white;
 }
 input:not(:checked) + .slider:after{left:42px;content:"OFF"}
 input:checked + .slider:after{left:12px;content:"ON"}
@@ -276,7 +353,7 @@ color:var(--muted);
 padding:10px 16px;
 background:var(--success);
 color:#fff;border:0;border-radius:10px;
-cursor:pointer;font-weight:900;
+cursor:pointer;font-weight:950;
 }
 .action-btn:hover{background:#2eb57f}
 .empty-state{
@@ -285,17 +362,6 @@ color:var(--muted);
 padding:50px 0;
 font-size:1.05rem;
 }
-
-/* Top helper card */
-.helper{
-margin:0 0 18px;
-padding:14px 16px;
-border-radius:14px;
-border:1px solid rgba(43,118,255,.30);
-background:rgba(43,118,255,.10);
-color:var(--muted);
-}
-.helper b{color:var(--text)}
 </style>
 </head>
 
@@ -313,15 +379,40 @@ color:var(--muted);
 </div>
 
 <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
-<button class="btn btn-ghost" id="goHome">Home</button>
-<button class="btn" id="logout">Logout</button>
+<button class="btn btn-ghost" id="goHome" type="button">Home</button>
+<button class="btn" id="logout" type="button">Logout</button>
 </div>
 </header>
 
 <div class="helper">
-<b>One account for everything:</b> request deliveries as a Sender, and when you travel switch to Courier mode to carry packages and earn.
+<b>Security & Trust:</b> to protect users and prevent illegal use, ZigaSwift requires verification before anyone can send or carry packages.
 </div>
 
+<!-- VERIFICATION CENTER (GATE) -->
+<section class="section" id="verificationSection">
+<h2>Verification Center</h2>
+
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+<span class="pill" id="overallPill"><span class="dot"></span> Verification Required</span>
+<button class="btn btn-sm btn-ghost" id="resetVerification" type="button">Reset (demo)</button>
+</div>
+
+<div class="verify-list" id="verifyList">
+<!-- filled by JS -->
+</div>
+
+<div class="small">
+<b>Note:</b> This is demo-mode UI. Next step is connecting each item to real services:
+ID verification + selfie match, background check, license validation, and signed terms.
+</div>
+</section>
+
+<!-- LOCKED BANNER -->
+<div class="locked-banner" id="lockedBanner">
+<b>Locked:</b> Complete all verification steps above to access <b>Send Packages</b> and <b>Carry Packages</b>.
+</div>
+
+<!-- Tabs -->
 <div class="tabs">
 <button class="tab active" id="tabSender" type="button">Send Packages</button>
 <button class="tab" id="tabCourier" type="button">Carry Packages</button>
@@ -331,7 +422,6 @@ color:var(--muted);
 SENDER VIEW
 ======================== -->
 <div id="senderView">
-<!-- Request a new shipment -->
 <section class="section">
 <h2>Request New Delivery</h2>
 
@@ -408,7 +498,7 @@ Shipments are limited to small, legally permitted items within the approved maxi
 • Hair extensions, Hair tools (without battery)<br><br>
 
 <strong>Package limits:</strong><br>
-• Maximum weight: <b>8 kg</b> (to fit safely in traveler luggage)<br><br>
+• Maximum weight: <b>8 kg</b><br><br>
 
 <strong>Not allowed (safety & airline rules):</strong><br>
 • Liquids / gels &gt; 100 ml<br>
@@ -417,19 +507,17 @@ Shipments are limited to small, legally permitted items within the approved maxi
 • Hazardous materials (batteries &gt;100Wh without approval, chemicals)<br>
 • Illegal substances or counterfeit goods, drugs or controlled substances<br>
 • Large/heavy items (&gt;8 kg or oversized)<br><br>
-
 If your item is not listed, choose “Other item” and describe it clearly.<br>
 All requests are reviewed for compliance.
 </div>
 </details>
 
-<button type="submit" class="btn" style="margin-top: 28px; width: 100%; padding: 14px; font-size: 1.05rem;">
+<button type="submit" class="btn" id="senderSubmitBtn" style="margin-top: 28px; width: 100%; padding: 14px; font-size: 1.05rem;">
 Submit Request & Find Matches
 </button>
 </form>
 </section>
 
-<!-- Matched couriers -->
 <section class="section">
 <h2>Available Couriers</h2>
 <div class="matches-grid" id="matchesList">
@@ -442,7 +530,6 @@ Submit Request & Find Matches
 COURIER VIEW
 ======================== -->
 <div id="courierView" class="hidden">
-<!-- Courier Profile -->
 <section class="section">
 <h2>Your Profile</h2>
 <div class="profile-header">
@@ -466,7 +553,6 @@ Update Profile Picture:
 </div>
 </section>
 
-<!-- Stats & Availability -->
 <section class="section">
 <h2>Your Stats & Availability</h2>
 <div class="stats-grid">
@@ -507,7 +593,6 @@ Update Profile Picture:
 </div>
 </section>
 
-<!-- Available Shipments -->
 <section class="section">
 <h2>Available Shipments</h2>
 <div id="shipmentsList" class="empty-state">Loading available shipments...</div>
@@ -517,18 +602,35 @@ Update Profile Picture:
 
 <script>
 /* ======================================================
-BASIC AUTH GUARD (DEMO)
-- If you want: require jwtToken to enter dashboard
+DEMO VERIFICATION STATE (localStorage)
+Later: replace with backend + JWT-protected endpoints.
 ====================================================== */
-if (!localStorage.getItem('jwtToken')) {
-// If you host dashboard.html in same folder as index.html, this returns home.
-// If you prefer: window.location.href = 'index.html';
-// window.location.href = '/';
-// For demo, comment this out if you want to allow viewing without login.
+const VERIFY_KEY = 'ziga_verification';
+
+const DEFAULT_VERIFY = {
+backgroundCheck: false,
+driversLicense: false,
+profilePicture: false,
+terms: false
+};
+
+function getVerifyState(){
+try {
+const raw = localStorage.getItem(VERIFY_KEY);
+return raw ? { ...DEFAULT_VERIFY, ...JSON.parse(raw) } : { ...DEFAULT_VERIFY };
+} catch {
+return { ...DEFAULT_VERIFY };
+}
+}
+function setVerifyState(next){
+localStorage.setItem(VERIFY_KEY, JSON.stringify(next));
+}
+function isFullyVerified(state){
+return !!(state.backgroundCheck && state.driversLicense && state.profilePicture && state.terms);
 }
 
 /* ======================================================
-HEADER: welcome line (pull from your stored values)
+Header welcome line
 ====================================================== */
 const welcomeLine = document.getElementById('welcomeLine');
 const savedNameAny =
@@ -536,33 +638,28 @@ localStorage.getItem('courierName') ||
 localStorage.getItem('senderName') ||
 localStorage.getItem('userName') ||
 'Welcome back';
-
-if (savedNameAny && savedNameAny !== 'Welcome back') {
-welcomeLine.textContent = `Welcome, ${savedNameAny}`;
-} else {
-welcomeLine.textContent = 'Welcome back';
-}
+welcomeLine.textContent = (savedNameAny && savedNameAny !== 'Welcome back') ? `Welcome, ${savedNameAny}` : 'Welcome back';
 
 /* ======================================================
 NAV BUTTONS
 ====================================================== */
 document.getElementById('logout').addEventListener('click', () => {
 localStorage.removeItem('jwtToken');
-// keep profile/demo data; only clear token
 window.location.href = '/';
 });
-
 document.getElementById('goHome').addEventListener('click', () => {
 window.location.href = '/';
 });
 
 /* ======================================================
-TABS (Sender/Courier)
+TABS (Sender/Courier) + LOCKING
 ====================================================== */
 const tabSender = document.getElementById('tabSender');
 const tabCourier = document.getElementById('tabCourier');
 const senderView = document.getElementById('senderView');
 const courierView = document.getElementById('courierView');
+const lockedBanner = document.getElementById('lockedBanner');
+const senderSubmitBtn = document.getElementById('senderSubmitBtn');
 
 function setTab(which){
 const sender = which === 'sender';
@@ -576,8 +673,125 @@ localStorage.setItem('dashboardTab', which);
 tabSender.addEventListener('click', () => setTab('sender'));
 tabCourier.addEventListener('click', () => setTab('courier'));
 
+function applyLockUI() {
+const verify = getVerifyState();
+const ok = isFullyVerified(verify);
+
+lockedBanner.style.display = ok ? 'none' : 'block';
+
+// Disable interactive actions if not verified
+senderSubmitBtn.disabled = !ok;
+
+// If user not verified, prevent courier online toggle from being used
+const availabilityToggle = document.getElementById('availabilityToggle');
+availabilityToggle.disabled = !ok;
+if (!ok) {
+availabilityToggle.checked = false;
+localStorage.setItem('courierOnline', 'false');
+}
+
+// Also visually dim the tabs if locked (still viewable but actions are disabled)
+tabSender.style.opacity = ok ? '1' : '.85';
+tabCourier.style.opacity = ok ? '1' : '.85';
+}
+
 const lastTab = localStorage.getItem('dashboardTab') || 'sender';
 setTab(lastTab);
+
+/* ======================================================
+VERIFICATION CENTER UI
+====================================================== */
+const verifyList = document.getElementById('verifyList');
+const overallPill = document.getElementById('overallPill');
+
+function renderVerification() {
+const v = getVerifyState();
+const ok = isFullyVerified(v);
+
+overallPill.classList.toggle('ok', ok);
+overallPill.innerHTML = ok
+? `<span class="dot"></span> Verification Completed`
+: `<span class="dot"></span> Verification Required`;
+
+const items = [
+{
+key: 'backgroundCheck',
+title: 'Background Check',
+desc: 'Confirm identity and run basic safety screening.',
+action: 'Start Check'
+},
+{
+key: 'driversLicense',
+title: "Driver's License",
+desc: 'Upload/verify government ID (required for carrying packages).',
+action: 'Verify License'
+},
+{
+key: 'profilePicture',
+title: 'Profile Picture',
+desc: 'Upload a clear photo for accountability.',
+action: 'Upload Photo'
+},
+{
+key: 'terms',
+title: 'Terms and Conditions',
+desc: 'Accept rules: legal items only, compliance, disputes and penalties.',
+action: 'Review & Accept'
+}
+];
+
+verifyList.innerHTML = items.map(item => {
+const done = !!v[item.key];
+return `
+<div class="verify-item">
+<div class="verify-left">
+<div class="verify-title">${item.title}</div>
+<div class="verify-status ${done ? 'status-complete' : 'status-pending'}">
+${done ? 'Completed' : 'Pending'}
+</div>
+<div class="small">${item.desc}</div>
+</div>
+<div class="verify-actions">
+${done
+? `<button class="btn btn-sm btn-ghost" type="button" data-act="view" data-key="${item.key}">View</button>`
+: `<button class="btn btn-sm btn-green" type="button" data-act="complete" data-key="${item.key}">${item.action}</button>`
+}
+</div>
+</div>
+`;
+}).join('');
+
+// bind buttons
+verifyList.querySelectorAll('button[data-act]').forEach(btn => {
+btn.addEventListener('click', () => {
+const act = btn.getAttribute('data-act');
+const key = btn.getAttribute('data-key');
+const cur = getVerifyState();
+
+if (act === 'complete') {
+// Demo completion:
+// In real app: open modal > upload ID/selfie > call backend > await verification result
+cur[key] = true;
+setVerifyState(cur);
+renderVerification();
+applyLockUI();
+renderShipments();
+} else if (act === 'view') {
+alert(`✅ ${key} is marked as Completed (demo).\n\nNext step: connect to backend + real verification services.`);
+}
+});
+});
+
+applyLockUI();
+}
+
+document.getElementById('resetVerification').addEventListener('click', () => {
+setVerifyState({ ...DEFAULT_VERIFY });
+renderVerification();
+renderShipments();
+});
+
+renderVerification();
 
 /* ======================================================
 SENDER: Other item toggle
@@ -635,8 +849,12 @@ SENDER: Form submit (demo)
 ====================================================== */
 document.getElementById('requestForm').addEventListener('submit', (e) => {
 e.preventDefault();
-alert('Request submitted! (Demo mode)\nConnect this to your backend later.');
-// In real app → collect FormData and send via fetch with JWT
+const v = getVerifyState();
+if (!isFullyVerified(v)) {
+alert('🔒 Verification required before sending packages.\nComplete all steps in the Verification Center.');
+return;
+}
+alert('✅ Request submitted! (Demo mode)\nConnect this to your backend later.');
 });
 
 /* ======================================================
@@ -681,6 +899,14 @@ const reader = new FileReader();
 reader.onload = e => {
 localStorage.setItem('courierPic', e.target.result);
 profilePic.src = e.target.result;
+
+// If user uploads a pic, auto-mark "profilePicture" verification as completed (demo)
+const v = getVerifyState();
+if (!v.profilePicture) {
+v.profilePicture = true;
+setVerifyState(v);
+renderVerification();
+}
 };
 reader.readAsDataURL(picInput.files[0]);
 }
@@ -711,12 +937,21 @@ alert('Please enter a valid number (0 or higher)');
 });
 
 /* ======================================================
-COURIER: Availability Toggle
+COURIER: Availability Toggle (locked if not verified)
 ====================================================== */
 const toggle = document.getElementById('availabilityToggle');
 const statusMessage = document.getElementById('statusMessage');
 
 function updateStatus() {
+const v = getVerifyState();
+if (!isFullyVerified(v)) {
+toggle.checked = false;
+localStorage.setItem('courierOnline', 'false');
+statusMessage.textContent = "Verification required before going Online";
+statusMessage.className = "status-text status-offline";
+return;
+}
+
 const isOnline = toggle.checked;
 localStorage.setItem('courierOnline', String(isOnline));
 
@@ -728,16 +963,20 @@ statusMessage.textContent = "You are currently Offline";
 statusMessage.className = "status-text status-offline";
 }
 }
+
 function loadAvailability() {
 const saved = localStorage.getItem('courierOnline') === 'true';
 toggle.checked = saved;
 updateStatus();
 }
-toggle.addEventListener('change', updateStatus);
+toggle.addEventListener('change', () => {
+updateStatus();
+renderShipments();
+});
 loadAvailability();
 
 /* ======================================================
-COURIER: Sample shipments (demo)
+COURIER: Sample shipments (demo) — only show when verified + online
 ====================================================== */
 const shipments = [
 {
@@ -760,8 +999,14 @@ estimatedPay: "$36"
 
 function renderShipments() {
 const list = document.getElementById('shipmentsList');
+const v = getVerifyState();
+const verified = isFullyVerified(v);
 const isOnline = localStorage.getItem('courierOnline') === 'true';
 
+if (!verified) {
+list.innerHTML = '<div class="empty-state">🔒 Complete verification to view shipments.</div>';
+return;
+}
 if (!isOnline) {
 list.innerHTML = '<div class="empty-state">Go <b>Online</b> to see available shipments.</div>';
 return;
@@ -787,14 +1032,11 @@ card.innerHTML = `
 <button class="action-btn" type="button">Accept (${s.estimatedPay})</button>
 `;
 card.querySelector('button').addEventListener('click', () => {
-alert(`✅ Accepted: ${s.title} (Demo)\nNext step: connect to backend + escrow flow.`);
+alert(`✅ Accepted: ${s.title} (Demo)\nNext: connect to backend + escrow flow.`);
 });
 list.appendChild(card);
 });
 }
-
-// re-render shipments when toggle changes
-toggle.addEventListener('change', renderShipments);
 renderShipments();
 </script>
 </body>
