@@ -19,6 +19,7 @@
 --shadow:0 18px 40px rgba(0,0,0,.35);
 --radius:14px;
 }
+
 *{box-sizing:border-box}
 body{
 background:var(--bg);
@@ -28,7 +29,9 @@ margin:0;
 padding:18px;
 line-height:1.6;
 }
+
 .container{max-width:1100px;margin:0 auto;}
+
 header{
 display:flex;
 justify-content:space-between;
@@ -37,6 +40,7 @@ gap:12px;
 margin:6px 0 22px;
 flex-wrap:wrap;
 }
+
 .brand{
 display:flex;align-items:center;gap:10px;
 font-weight:900;font-size:1.25rem;letter-spacing:.2px;
@@ -47,7 +51,9 @@ display:grid;place-items:center;
 background:linear-gradient(135deg, rgba(43,118,255,.95), rgba(61,220,151,.9));
 color:#081021;
 }
+
 .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
 .btn{
 padding:12px 18px;
 background:var(--accent);
@@ -71,6 +77,28 @@ border:1px solid rgba(255,107,107,.35);
 color:var(--text);
 }
 .btn-danger:hover{background:rgba(255,107,107,.22)}
+
+.tabs{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin:0 0 18px;
+}
+.tab{
+padding:10px 14px;
+border-radius:999px;
+border:1px solid var(--border);
+background:rgba(255,255,255,.04);
+color:var(--muted);
+cursor:pointer;
+font-weight:800;
+}
+.tab.active{
+background:rgba(43,118,255,.16);
+border-color:rgba(43,118,255,.35);
+color:var(--text);
+}
+
 .section{
 background:var(--card);
 border:1px solid var(--border);
@@ -79,12 +107,15 @@ padding:22px;
 margin-bottom:18px;
 box-shadow:var(--shadow);
 }
+
 h1{margin:0;font-size:1.6rem}
 h2{margin:0 0 12px;font-size:1.3rem;color:var(--success)}
 h3{margin:0 0 10px;color:var(--success)}
 p{margin:10px 0;color:var(--muted)}
+
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:980px){.grid-2{grid-template-columns:1fr}}
+
 label{
 display:block;
 margin:14px 0 8px;
@@ -106,6 +137,7 @@ border-color:rgba(43,118,255,.55);
 box-shadow:0 0 0 6px rgba(43,118,255,.14);
 }
 textarea{resize:vertical;min-height:90px}
+
 .note{
 padding:12px 14px;
 border-radius:12px;
@@ -113,10 +145,12 @@ border:1px solid var(--border);
 background:rgba(255,255,255,.03);
 color:var(--muted);
 }
+
 .small{font-size:.92rem;color:var(--muted)}
 .form-msg{margin-top:12px;min-height:20px;font-weight:700}
 .form-msg.success{color:var(--success)}
 .form-msg.error{color:var(--danger)}
+
 .profile-header{
 display:flex;
 align-items:center;
@@ -130,12 +164,14 @@ object-fit:cover;
 border:3px solid var(--accent);
 background:#0e1628;
 }
+
 .card{
 background:var(--card2);
 border:1px solid var(--border);
 border-radius:12px;
 padding:16px;
 }
+
 .stats-grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
@@ -150,6 +186,7 @@ text-align:center;
 }
 .stat-label{font-size:.95rem;color:var(--muted);margin-bottom:6px}
 .stat-value{font-size:1.7rem;font-weight:900;color:var(--accent)}
+
 .shipment-card, .match-card{
 background:var(--card2);
 padding:16px;
@@ -177,16 +214,15 @@ font-weight:800;
 margin-top:10px;
 }
 .action-btn:hover{background:#2eb57f}
-.action-btn:disabled{opacity:.6;cursor:not-allowed}
+
 .empty-state{
 text-align:center;
 color:var(--muted);
 padding:28px 0;
 font-size:1.05rem;
 }
-.hr{height:1px;background:var(--border);margin:16px 0}
 
-/* Toggle Switch */
+/* Toggle Switch (Courier Online/Offline) */
 .switch{position:relative;display:inline-block;width:74px;height:38px}
 .switch input{opacity:0;width:0;height:0}
 .slider{
@@ -212,56 +248,28 @@ input:checked + .slider:after{left:12px;content:"ON"}
 .status-online{color:var(--success)}
 .status-offline{color:var(--danger)}
 
-/* Tabs */
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}
-.tab{
-padding:10px 14px;border-radius:999px;
-border:1px solid var(--border);
-background:rgba(255,255,255,.04);
-color:var(--muted);
-cursor:pointer;font-weight:900;
+.photo-upload{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+gap:12px;
+margin-top:10px;
 }
-.tab.active{
-background:rgba(43,118,255,.16);
-border-color:rgba(43,118,255,.35);
-color:var(--text);
+.photo-preview{
+position:relative;
+width:100%;
+padding-top:100%;
+background:#0e1628;
+border:2px dashed var(--border);
+border-radius:10px;
+overflow:hidden;
+}
+.photo-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo-preview.empty{
+display:flex;align-items:center;justify-content:center;
+color:var(--muted);font-size:.9rem;text-align:center;padding:10px;
 }
 
-/* Verification list */
-.verify-list{margin:10px 0 0;padding:0;list-style:none}
-.verify-item{
-display:flex;align-items:center;justify-content:space-between;
-gap:12px;
-padding:14px 12px;
-border:1px solid var(--border);
-border-radius:12px;
-background:rgba(255,255,255,.03);
-margin:12px 0;
-}
-.verify-left{display:flex;flex-direction:column;gap:2px}
-.verify-title{font-weight:950;font-size:1.05rem;color:var(--text)}
-.verify-status{font-weight:800;color:var(--muted)}
-.verify-status.done{color:var(--success)}
-.pill{
-padding:8px 10px;border-radius:999px;
-border:1px solid var(--border);
-background:rgba(255,255,255,.04);
-font-weight:900;color:var(--text);
-}
-.pill.done{
-border-color:rgba(61,220,151,.35);
-background:rgba(61,220,151,.12);
-color:var(--success);
-}
-.locked-overlay{
-margin-top:14px;
-border:1px solid rgba(255,107,107,.35);
-background:rgba(255,107,107,.10);
-border-radius:12px;
-padding:14px;
-color:var(--text);
-}
-.locked-overlay b{color:#fff}
+.hr{height:1px;background:var(--border);margin:16px 0}
 </style>
 </head>
 
@@ -279,81 +287,6 @@ color:var(--text);
 </div>
 </header>
 
-<!-- =========================
-VERIFICATION CENTER (GATE)
-========================== -->
-<div id="verificationView">
-<section class="section">
-<h2>Verification Center</h2>
-<p>
-To protect users and prevent illegal use, ZigaSwift requires verification before you can send or carry packages.
-Complete the steps below to unlock the dashboard.
-</p>
-
-<ul class="verify-list">
-<li class="verify-item">
-<div class="verify-left">
-<div class="verify-title">Background Check</div>
-<div class="verify-status" id="bgStatus">Not completed</div>
-</div>
-<div style="display:flex;gap:10px;align-items:center;">
-<span class="pill" id="bgPill">Pending</span>
-<button class="btn" id="bgBtn" type="button">Complete</button>
-</div>
-</li>
-
-<li class="verify-item">
-<div class="verify-left">
-<div class="verify-title">Driver’s License</div>
-<div class="verify-status" id="dlStatus">Not completed</div>
-</div>
-<div style="display:flex;gap:10px;align-items:center;">
-<span class="pill" id="dlPill">Pending</span>
-<button class="btn" id="dlBtn" type="button">Upload</button>
-</div>
-</li>
-
-<li class="verify-item">
-<div class="verify-left">
-<div class="verify-title">Profile Picture</div>
-<div class="verify-status" id="ppStatus">Not completed</div>
-</div>
-<div style="display:flex;gap:10px;align-items:center;">
-<span class="pill" id="ppPill">Pending</span>
-<button class="btn" id="ppBtn" type="button">Upload</button>
-</div>
-</li>
-
-<li class="verify-item">
-<div class="verify-left">
-<div class="verify-title">Terms and Conditions</div>
-<div class="verify-status" id="tcStatus">Not completed</div>
-</div>
-<div style="display:flex;gap:10px;align-items:center;">
-<span class="pill" id="tcPill">Pending</span>
-<button class="btn" id="tcBtn" type="button">Agree</button>
-</div>
-</li>
-</ul>
-
-<div class="locked-overlay" id="lockedMsg">
-<b>Locked:</b> Complete all verification steps to access Send / Carry features.
-</div>
-
-<button class="btn" id="enterDashboardBtn" type="button" style="margin-top:14px;width:100%;padding:14px;font-size:1.05rem;" disabled>
-Enter Dashboard
-</button>
-
-<div class="small" style="margin-top:10px;">
-Demo only: these steps are stored in your browser. Later we’ll connect them to your API and real document checks.
-</div>
-</section>
-</div>
-
-<!-- =========================
-MAIN DASHBOARD (LOCKED UNTIL VERIFIED)
-========================== -->
-<div id="dashboardView" style="display:none;">
 <div class="tabs" role="tablist" aria-label="Dashboard tabs">
 <button class="tab active" id="tabSender" type="button" role="tab" aria-selected="true">Send Packages</button>
 <button class="tab" id="tabCourier" type="button" role="tab" aria-selected="false">Carry Packages</button>
@@ -434,6 +367,17 @@ Create a delivery request and we’ll show couriers whose travel details match y
 
 <label>Additional Contents Description</label>
 <textarea id="contents" rows="3" placeholder="Extra details (color, condition, special handling needs...)"></textarea>
+
+<label>Upload Photos of the Item (4–6 recommended)</label>
+<input type="file" id="photos" accept="image/*" multiple />
+<div class="small" style="margin-top:6px;">Uploaded: <strong id="photoCount">0</strong>/6 photos</div>
+<div class="photo-upload" id="photoPreviews">
+<div class="photo-preview empty">No photos selected yet</div>
+</div>
+
+<div class="note" style="margin-top:14px;">
+Shipments are limited to small, legally permitted items. Choose “Other item” and describe clearly if needed.
+</div>
 
 <button type="submit" class="btn" style="margin-top:18px;width:100%;padding:14px;font-size:1.05rem;">
 Submit Request & Find Matches
@@ -556,26 +500,30 @@ This list updates from sender requests (saved locally). It shows: <b>Pickup date
 </section>
 </div>
 </div>
-</div>
 
 <script>
 /* =========================================================
 Helpers
 ========================================================= */
 function $(id){ return document.getElementById(id); }
+
 function normalize(s){ return String(s||"").trim().toLowerCase(); }
+
 function includesLoose(haystack, needle){
 const h = normalize(haystack);
 const n = normalize(needle);
 if (!h || !n) return false;
 return h.includes(n) || n.includes(h);
 }
+
 function parseDate(d){
+// expects yyyy-mm-dd
 const s = String(d || "").trim();
 if (!s) return null;
 const t = Date.parse(s + "T00:00:00");
 return Number.isFinite(t) ? t : null;
 }
+
 function inDateRange(target, start, end){
 const T = parseDate(target);
 const S = parseDate(start);
@@ -583,102 +531,13 @@ const E = parseDate(end);
 if (!T || !S || !E) return false;
 return T >= S && T <= E;
 }
+
 function moneyEstimate(weightKg, priority){
 const w = Math.max(0.1, Number(weightKg)||0.1);
-const base = 22 + w * 10;
+const base = 22 + w * 10; // simple demo formula
 const mult = priority === "rush" ? 1.45 : (priority === "express" ? 1.25 : 1.0);
 return "$" + Math.round(base * mult);
 }
-
-/* =========================================================
-Keys
-========================================================= */
-const KEY_TRIP = "ziga_courier_trip";
-const KEY_SHIPMENTS = "ziga_shipments";
-const KEY_COURIER_PROFILE = "ziga_courier_profile";
-const KEY_VERIFY = "ziga_verification"; // <-- verification state
-
-/* =========================================================
-Verification (Gate)
-========================================================= */
-function getVerify(){
-try { return JSON.parse(localStorage.getItem(KEY_VERIFY) || "{}"); }
-catch { return {}; }
-}
-function setVerify(v){
-localStorage.setItem(KEY_VERIFY, JSON.stringify(v || {}));
-}
-function allVerified(v){
-return !!(v.bg && v.dl && v.pp && v.tc);
-}
-function setVerifyUI(){
-const v = getVerify();
-
-const map = [
-["bg", $("bgStatus"), $("bgPill")],
-["dl", $("dlStatus"), $("dlPill")],
-["pp", $("ppStatus"), $("ppPill")],
-["tc", $("tcStatus"), $("tcPill")],
-];
-
-map.forEach(([k, statusEl, pillEl])=>{
-const done = !!v[k];
-statusEl.textContent = done ? "Completed" : "Not completed";
-statusEl.classList.toggle("done", done);
-pillEl.textContent = done ? "Done" : "Pending";
-pillEl.classList.toggle("done", done);
-});
-
-const ok = allVerified(v);
-$("enterDashboardBtn").disabled = !ok;
-$("lockedMsg").style.display = ok ? "none" : "block";
-}
-
-function showDashboardIfVerified(){
-const v = getVerify();
-const ok = allVerified(v);
-$("verificationView").style.display = ok ? "none" : "block";
-$("dashboardView").style.display = ok ? "block" : "none";
-}
-
-$("bgBtn").addEventListener("click", ()=>{
-const v = getVerify();
-// Demo: "complete" instantly. Later: backend check.
-v.bg = true;
-setVerify(v);
-setVerifyUI();
-});
-
-$("dlBtn").addEventListener("click", ()=>{
-const v = getVerify();
-// Demo: "upload" instantly. Later: upload to API + review.
-v.dl = true;
-setVerify(v);
-setVerifyUI();
-});
-
-$("ppBtn").addEventListener("click", ()=>{
-const v = getVerify();
-// Demo: "upload" instantly. Later: store image + review.
-v.pp = true;
-setVerify(v);
-setVerifyUI();
-});
-
-$("tcBtn").addEventListener("click", ()=>{
-const v = getVerify();
-// Demo: "agree" instantly. Later: store consent timestamp.
-v.tc = true;
-setVerify(v);
-setVerifyUI();
-});
-
-$("enterDashboardBtn").addEventListener("click", ()=>{
-showDashboardIfVerified();
-// After unlocking, refresh lists
-renderMatches();
-renderShipmentsForCourier();
-});
 
 /* =========================================================
 Tabs
@@ -705,11 +564,13 @@ Logout + Account (demo)
 ========================================================= */
 $("logoutBtn").addEventListener("click", ()=>{
 localStorage.removeItem("jwtToken");
+// keep demo data (requests/trips) so you can test matching
 window.location.href = "/";
 });
+
 $("whoamiBtn").addEventListener("click", ()=>{
 const role = localStorage.getItem("role") || "user";
-alert("Logged in (demo). Role: " + role + "\n\nLater we’ll secure this with the API + JWT verification.");
+alert("Logged in (demo). Role: " + role + "\\n\\nLater we’ll secure this with the API + JWT verification.");
 });
 
 /* =========================================================
@@ -727,7 +588,42 @@ $("itemOtherInput").value = "";
 });
 
 /* =========================================================
-Storage helpers
+SENDER: Photo preview (max 6)
+========================================================= */
+const photoInput = $("photos");
+const photoPreviews = $("photoPreviews");
+const photoCountEl = $("photoCount");
+
+photoInput.addEventListener("change", ()=>{
+photoPreviews.innerHTML = "";
+const files = Array.from(photoInput.files || []).slice(0, 6);
+photoCountEl.textContent = String(files.length);
+
+if (files.length === 0) {
+photoPreviews.innerHTML = '<div class="photo-preview empty">No photos selected yet</div>';
+return;
+}
+files.forEach(file=>{
+const reader = new FileReader();
+reader.onload = (e)=>{
+const div = document.createElement("div");
+div.className = "photo-preview";
+div.innerHTML = `<img src="${e.target.result}" alt="Item preview">`;
+photoPreviews.appendChild(div);
+};
+reader.readAsDataURL(file);
+});
+});
+
+/* =========================================================
+DATA: Storage keys
+========================================================= */
+const KEY_TRIP = "ziga_courier_trip"; // single courier trip (demo)
+const KEY_SHIPMENTS = "ziga_shipments"; // array of sender requests (demo)
+const KEY_COURIER_PROFILE = "ziga_courier_profile"; // name/pic/capacity/online (demo)
+
+/* =========================================================
+COURIER: Profile load/save
 ========================================================= */
 function getCourierProfile(){
 try { return JSON.parse(localStorage.getItem(KEY_COURIER_PROFILE) || "{}"); }
@@ -736,46 +632,12 @@ catch { return {}; }
 function setCourierProfile(obj){
 localStorage.setItem(KEY_COURIER_PROFILE, JSON.stringify(obj || {}));
 }
-function getCourierTrip(){
-try { return JSON.parse(localStorage.getItem(KEY_TRIP) || "null"); }
-catch { return null; }
-}
-function setCourierTrip(trip){
-localStorage.setItem(KEY_TRIP, JSON.stringify(trip));
-}
-function getShipments(){
-try { return JSON.parse(localStorage.getItem(KEY_SHIPMENTS) || "[]"); }
-catch { return []; }
-}
-function setShipments(arr){
-localStorage.setItem(KEY_SHIPMENTS, JSON.stringify(arr || []));
-}
 
-/* =========================================================
-COURIER: Profile load/save
-========================================================= */
 const profilePic = $("profilePic");
 const courierNameEl = $("courierName");
 const courierEmailEl = $("courierEmail");
 const nameInput = $("nameInput");
 const picInput = $("picInput");
-
-function updateCourierStatus(){
-const prof = getCourierProfile();
-const isOnline = !!$("availabilityToggle").checked;
-prof.online = isOnline;
-setCourierProfile(prof);
-
-const statusMessage = $("statusMessage");
-if (isOnline){
-statusMessage.textContent = "You are currently Online – accepting deliveries";
-statusMessage.className = "status-text status-online";
-} else {
-statusMessage.textContent = "You are currently Offline";
-statusMessage.className = "status-text status-offline";
-}
-renderShipmentsForCourier();
-}
 
 function loadCourierProfile(){
 const prof = getCourierProfile();
@@ -788,8 +650,10 @@ courierEmailEl.textContent = email;
 nameInput.value = savedName;
 profilePic.src = savedPic;
 
+// stats
 $("capacityInput").value = String(prof.capacity ?? localStorage.getItem("courierCapacity") ?? "8");
-$("availabilityToggle").checked = !!prof.online;
+const online = (prof.online ?? (localStorage.getItem("courierOnline")==="true")) === true;
+$("availabilityToggle").checked = online;
 updateCourierStatus();
 }
 loadCourierProfile();
@@ -815,6 +679,9 @@ alert("Profile updated successfully!");
 }
 });
 
+/* =========================================================
+COURIER: Capacity
+========================================================= */
 $("saveCapacity").addEventListener("click", ()=>{
 const prof = getCourierProfile();
 const newCapacity = parseFloat($("capacityInput").value);
@@ -827,11 +694,41 @@ setCourierProfile(prof);
 alert(`Available capacity updated to ${newCapacity} kg`);
 });
 
-$("availabilityToggle").addEventListener("change", updateCourierStatus);
+/* =========================================================
+COURIER: Availability toggle
+========================================================= */
+const toggle = $("availabilityToggle");
+const statusMessage = $("statusMessage");
+
+function updateCourierStatus(){
+const prof = getCourierProfile();
+const isOnline = !!toggle.checked;
+prof.online = isOnline;
+setCourierProfile(prof);
+
+if (isOnline){
+statusMessage.textContent = "You are currently Online – accepting deliveries";
+statusMessage.className = "status-text status-online";
+} else {
+statusMessage.textContent = "You are currently Offline";
+statusMessage.className = "status-text status-offline";
+}
+renderShipmentsForCourier();
+}
+
+toggle.addEventListener("change", updateCourierStatus);
 
 /* =========================================================
-COURIER: Trip Details
+COURIER: Travel Details (Depart/Arrival, Locations)
 ========================================================= */
+function getCourierTrip(){
+try { return JSON.parse(localStorage.getItem(KEY_TRIP) || "null"); }
+catch { return null; }
+}
+function setCourierTrip(trip){
+localStorage.setItem(KEY_TRIP, JSON.stringify(trip));
+}
+
 function renderTripSummary(){
 const trip = getCourierTrip();
 const el = $("tripSummary");
@@ -845,6 +742,7 @@ Depart: ${trip.departDate} — ${trip.departLocation}<br>
 Arrive: ${trip.arrivalDate} — ${trip.destination}
 `;
 }
+
 function loadTripForm(){
 const trip = getCourierTrip();
 if (trip){
@@ -882,17 +780,91 @@ setCourierTrip({ departDate, arrivalDate, departLocation, destination });
 msg.classList.add("success");
 msg.textContent = "✅ Travel details saved. You’ll get better matches now.";
 renderTripSummary();
+
+// refresh matching and courier shipments
 renderMatches();
 renderShipmentsForCourier();
 });
 
 /* =========================================================
-Matching
+SENDER: Save request -> show courier matches -> generate demo shipment
+========================================================= */
+function getShipments(){
+try { return JSON.parse(localStorage.getItem(KEY_SHIPMENTS) || "[]"); }
+catch { return []; }
+}
+function setShipments(arr){
+localStorage.setItem(KEY_SHIPMENTS, JSON.stringify(arr || []));
+}
+
+$("requestForm").addEventListener("submit", (e)=>{
+e.preventDefault();
+const senderMsg = $("senderMsg");
+senderMsg.className = "form-msg";
+senderMsg.textContent = "";
+
+const pickupDate = $("pickupDate").value;
+const pickup = $("pickup").value.trim();
+const dropoff = $("dropoff").value.trim();
+const weight = $("weight").value;
+const value = $("value").value;
+const priority = $("priority").value;
+
+const itemCategory = $("itemSelect").value.trim();
+const otherItem = $("itemOtherInput").value.trim();
+const contents = $("contents").value.trim();
+
+if (!pickupDate || !pickup || !dropoff || !weight || !value || !itemCategory){
+senderMsg.classList.add("error");
+senderMsg.textContent = "Please fill all required fields.";
+return;
+}
+
+// Create a shipment request (demo)
+const shipment = {
+id: "SHP-" + Math.random().toString(16).slice(2, 8).toUpperCase(),
+createdAt: new Date().toISOString(),
+pickupDate,
+pickup,
+dropoff,
+weightNeeded: `${Number(weight).toFixed(1)} kg`,
+declaredValue: Number(value),
+priority,
+itemCategory,
+itemDetails: (itemCategory === "Other item (specify below)" ? otherItem : itemCategory),
+contents,
+estimatedPay: moneyEstimate(weight, priority),
+};
+
+const all = getShipments();
+all.unshift(shipment);
+setShipments(all);
+
+senderMsg.classList.add("success");
+senderMsg.textContent = "✅ Request submitted! Showing matching couriers below (demo).";
+
+// show matches
+renderMatches();
+
+// also refresh courier shipments list (if courier tab is used)
+renderShipmentsForCourier();
+
+// (optional) keep user on sender tab
+setTab("sender");
+});
+
+/* =========================================================
+MATCHING LOGIC (demo)
+Match courier trip to sender request:
+- pickupDate must be between courier departDate & arrivalDate
+- pickup location loosely matches courier depart location
+- dropoff loosely matches courier destination
 ========================================================= */
 function getLastSenderRequest(){
 const all = getShipments();
 return all.length ? all[0] : null;
 }
+
 function matchCourierToRequest(trip, req){
 if (!trip || !req) return false;
 const dateOk = inDateRange(req.pickupDate, trip.departDate, trip.arrivalDate);
@@ -911,6 +883,8 @@ if (!req){
 list.innerHTML = `<div class="empty-state">Submit a request above to find matching couriers.</div>`;
 return;
 }
+
+// If no courier travel details saved, show guidance.
 if (!trip){
 list.innerHTML = `
 <div class="empty-state">
@@ -921,7 +895,9 @@ Go to <b>Carry Packages</b> tab and save travel details to generate matches.
 return;
 }
 
+// For demo we have "one courier profile + one trip"
 const matches = matchCourierToRequest(trip, req);
+
 if (!matches){
 list.innerHTML = `
 <div class="empty-state">
@@ -946,7 +922,7 @@ list.innerHTML = `
 <div><strong>Capacity:</strong> ${capacity}</div>
 <div><strong>Est. Courier Reward:</strong> ${req.estimatedPay}</div>
 </div>
-<button class="action-btn" type="button" ${online ? "" : "disabled"}>
+<button class="action-btn" type="button" ${online ? "" : "disabled"} style="${online ? "" : "opacity:.6;cursor:not-allowed;"}">
 ${online ? "Request this Courier" : "Courier Offline"}
 </button>
 <div class="small" style="margin-top:10px;">
@@ -957,59 +933,9 @@ Demo: In the real app, this would create an escrow-backed delivery request and n
 }
 
 /* =========================================================
-Sender submit
-========================================================= */
-$("requestForm").addEventListener("submit", (e)=>{
-e.preventDefault();
-const senderMsg = $("senderMsg");
-senderMsg.className = "form-msg";
-senderMsg.textContent = "";
-
-const pickupDate = $("pickupDate").value;
-const pickup = $("pickup").value.trim();
-const dropoff = $("dropoff").value.trim();
-const weight = $("weight").value;
-const value = $("value").value;
-const priority = $("priority").value;
-
-const itemCategory = $("itemSelect").value.trim();
-const otherItem = $("itemOtherInput").value.trim();
-const contents = $("contents").value.trim();
-
-if (!pickupDate || !pickup || !dropoff || !weight || !value || !itemCategory){
-senderMsg.classList.add("error");
-senderMsg.textContent = "Please fill all required fields.";
-return;
-}
-
-const shipment = {
-id: "SHP-" + Math.random().toString(16).slice(2, 8).toUpperCase(),
-createdAt: new Date().toISOString(),
-pickupDate,
-pickup,
-dropoff,
-weightNeeded: `${Number(weight).toFixed(1)} kg`,
-declaredValue: Number(value),
-priority,
-itemCategory,
-itemDetails: (itemCategory === "Other item (specify below)" ? otherItem : itemCategory),
-contents,
-estimatedPay: moneyEstimate(weight, priority),
-};
-
-const all = getShipments();
-all.unshift(shipment);
-setShipments(all);
-
-senderMsg.classList.add("success");
-senderMsg.textContent = "✅ Request submitted! Showing matching couriers below (demo).";
-
-renderMatches();
-renderShipmentsForCourier();
-});
-
-/* =========================================================
-Courier shipments list
+COURIER: Render shipments list (from sender requests)
+- Must show: pickup date, pickup location, dropoff location, weight needed
+- Keep weight needed intact ✅
 ========================================================= */
 function renderShipmentsForCourier(){
 const list = $("shipmentsList");
@@ -1029,7 +955,10 @@ list.innerHTML = `<div class="empty-state">No shipments yet. Submit a request in
 return;
 }
 
-const filtered = trip ? all.filter(req => matchCourierToRequest(trip, req)) : all.slice();
+// If travel details exist, filter for better experience
+const filtered = trip
+? all.filter(req => matchCourierToRequest(trip, req))
+: all.slice();
 
 if (!filtered.length){
 list.innerHTML = `<div class="empty-state">No matching shipments for your saved travel details yet (demo).</div>`;
@@ -1061,10 +990,8 @@ list.appendChild(card);
 }
 
 /* =========================================================
-Initial load
+Initial render
 ========================================================= */
-setVerifyUI();
-showDashboardIfVerified();
 renderTripSummary();
 renderMatches();
 renderShipmentsForCourier();
