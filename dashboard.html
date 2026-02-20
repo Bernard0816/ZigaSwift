@@ -595,36 +595,46 @@ Update Profile Picture:
 </div>
 </div>
 
-  <div class="card">
+<div class="card">
 <h3>Travel Details (for best matches)</h3>
-<p class="small" style="margin-top:0;">
-Fill this out so senders can match with you based on your route and travel dates.
+<p class="small" style="margin-top: 0;">
+  Fill this out so senders can match with you based on your route and travel dates.
 </p>
 
-<div class="grid-2">
-<div>
-<label>Depart Date</label>
-<input type="date" id="departDate" required>
-</div>
-<div>
-<label>Arrival Date</label>
-<input type="date" id="arrivalDate" required>
-</div>
+<div class="grid-2" style="gap: 18px;">
+  <div>
+    <label>Depart Date</label>
+    <input type="date" id="departDate" required>
+  </div>
+
+  <div>
+    <label>Arrival Date</label>
+    <input type="date" id="arrivalDate" required>
+  </div>
 </div>
 
-<label>Depart Location</label>
-<input type="text" id="departLocation" placeholder="e.g. Houston, TX" required>
+<div style="margin-top: 14px;">
+  <label>Depart Location</label>
+  <input type="text" id="departLocation" placeholder="e.g. Houston, TX" required>
+</div>
 
-<label>Destination</label>
-<input type="text" id="destination" placeholder="e.g. Austin, TX" required>
+<div style="margin-top: 14px;">
+  <label>Destination</label>
+  <input type="text" id="destination" placeholder="e.g. Austin, TX" required>
+</div>
 
-<button class="btn" id="saveTrip" type="button" style="margin-top:14px;">Save Travel Details</button>
+<button class="btn" id="saveTrip" type="button" style="margin-top: 18px;">
+  Save Travel Details
+</button>
+
 <div class="form-msg" id="tripMsg" aria-live="polite"></div>
 
-<div class="hr"></div>
-<div class="small" id="tripSummary">No travel details saved yet.</div>
+<div class="hr" style="margin: 20px 0;"></div>
+
+<div class="small" id="tripSummary">
+  No travel details saved yet.
 </div>
-</div>
+
 </section>
 
 <section class="section">
